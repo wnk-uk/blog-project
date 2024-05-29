@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Account {
 
     @Id @GeneratedValue
     private Long id;
@@ -25,8 +25,17 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    @Column
+    private String picture;
+
     public String getRoleKey() {
         return this.role.getKey();
     }
 
+    public Account update(String name, String picture) {
+        this.name = name;
+        this.picture = picture;
+
+        return this;
+    }
 }
