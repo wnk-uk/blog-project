@@ -5,10 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-
-
-
         <div th:if="${account != null}">
+            <p th:text="${account.email}"></p>
+            <img th:src="${account.picture}" />
             <a href="/logout" class="btn btn-info active" role="button">Logout</a>
         </div>
 

@@ -1,6 +1,6 @@
 package com.blog.config;
 
-import com.blog.account.CustomOAuth2UserService;
+import com.blog.oauth2.CustomOAuth2UserService;
 import com.blog.domain.Role;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
-import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -46,7 +45,7 @@ public class SecurityConfig {
                 .headers((headerConfig) -> headerConfig.frameOptions(
                         HeadersConfigurer.FrameOptionsConfig::sameOrigin
                 ))
-                .cors((cors) -> cors.configurationSource(
+                .cors((cors) -> cors.configurationSource( //TODO
                         new CorsConfigurationSource() {
                             @Override
                             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
@@ -66,6 +65,7 @@ public class SecurityConfig {
     }
 
     //static resource들은 별도로 인증을 거치지 않음
+    //TODO
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         // antMatchers 부분도 deprecated 되어 requestMatchers로 대체

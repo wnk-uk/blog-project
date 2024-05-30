@@ -1,28 +1,22 @@
-package com.blog.account;
+package com.blog.oauth2;
 
+import com.blog.account.AccountRepository;
 import com.blog.config.AppProperties;
-import com.blog.domain.Account;
-import com.blog.domain.OAuthAttributes;
-import com.blog.domain.Role;
-import com.blog.domain.UserAccount;
+import com.blog.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.token.TokenService;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -33,8 +27,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private final AccountRepository accountRepository;
     private final AppProperties appProperties;
-
-    private final TokenService tokenService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -47,16 +39,18 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         Account account = saveOrUpdate(attributes);
         updateRole(account);
+        System.out.println(userRequest.getAccessToken().getTokenValue());
 
-
-        return new DefaultOAuth2User(List.of(new SimpleGrantedAuthority(account.getRoleKey()))
-                ,attributes.getAttributes(),
-                attributes.getNameAttributeKey()
+        // TODO : 핸들러로 빼줄 것
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                new UserAccount(account)
+                ,userRequest.getAccessToken().getTokenValue()
+                ,List.of(new SimpleGrantedAuthority(account.getRoleKey()))
         );
-    }
 
-    private void login(Account account) {
+        SecurityContextHolder.getContext().setAuthentication(token);
 
+        return new CustomUserDetails(account, List.of(new SimpleGrantedAuthority(account.getRoleKey())), attributes.getAttributes());
     }
 
     private void updateRole(Account account) {
