@@ -39,7 +39,7 @@ public class SecurityConfig {
                                         AntPathRequestMatcher.antMatcher("/blog/**")
                                 ).hasRole(Role.USER.getKey())
                                 .anyRequest().permitAll())
-                .logout((logout) -> logout.logoutSuccessUrl("/"))
+                .logout((logout) ->  logout.logoutSuccessUrl("/"))
                 .csrf((csrf) -> csrf.disable())
                 .oauth2Login((oauth) -> oauth.userInfoEndpoint((user) -> user.userService(customOAuth2UserService)))
                 .headers((headerConfig) -> headerConfig.frameOptions(

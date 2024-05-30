@@ -15,6 +15,12 @@ public class Account {
     @Id @GeneratedValue
     private Long id;
 
+    @Column(name = "attribute_id")
+    private String attributeId;             // 간편로그인 계정의 고유 ID
+
+    @Column(name = "registration_id")
+    private String registrationId;          // 간편로그인 고유 계정 (ex, google, kakao)
+
     @Column(nullable = false)
     private String name;
 

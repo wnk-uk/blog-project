@@ -38,3 +38,6 @@ out/
 
 ### properties ###
 *-oauth.properties
+
+## NPM ##
+src/main/resources/static/node_modules

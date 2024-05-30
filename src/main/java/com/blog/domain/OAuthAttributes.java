@@ -10,21 +10,23 @@ import java.util.Map;
 public class OAuthAttributes {
     private Map<String, Object> attributes;
     private String nameAttributeKey;
+    private String registrationId;
     private String name;
     private String email;
     private String picture;
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
-        return ofGoogle(userNameAttributeName, attributes);
+        return ofGoogle(registrationId, userNameAttributeName, attributes);
     }
 
-    private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
+    private static OAuthAttributes ofGoogle(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
         return OAuthAttributes.builder()
                 .name(String.valueOf(attributes.get("name")))
                 .email(String.valueOf(attributes.get("email")))
                 .picture(String.valueOf(attributes.get("picture")))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
+                .registrationId(registrationId)
                 .build();
     }
 
@@ -34,6 +36,8 @@ public class OAuthAttributes {
                 .email(this.email)
                 .picture(this.picture)
                 .role(Role.USER)
+                .attributeId(this.nameAttributeKey)
+                .registrationId(this.registrationId)
                 .build();
     }
 }
