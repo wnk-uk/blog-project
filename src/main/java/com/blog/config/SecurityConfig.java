@@ -37,7 +37,9 @@ public class SecurityConfig {
                                 ).permitAll()
                                 .requestMatchers(
                                         AntPathRequestMatcher.antMatcher("/blog/**")
-                                ).hasRole(Role.USER.getKey())
+                                )
+                                //.hasRole(Role.ADMIN.getKey())
+                                .permitAll()
                                 .anyRequest().permitAll())
                 .logout((logout) ->  logout.logoutSuccessUrl("/"))
                 .csrf((csrf) -> csrf.disable())

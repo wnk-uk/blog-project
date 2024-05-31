@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.header;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -58,12 +59,15 @@ public class MainControllerTest {
     //인증토큰 관련
 
 
+    @WithAccount
     @DisplayName("메인 페이지 접속") // 권한을 풀어놓았기 때문에 추후 api로 제공될 서비스에 재 테스트
     @Test
     public void main_page_test() throws Exception {
         mockMvc.perform(get("/"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(authenticated().withUsername("Uk NamGung"));
     }
+
 
 
 
