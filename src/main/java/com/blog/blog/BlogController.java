@@ -6,8 +6,11 @@ import com.blog.tag.TagForm;
 import com.blog.tag.TagService;
 import com.blog.tag.TagValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +28,13 @@ public class BlogController {
     }
 
     @PostMapping("/tags/add")
-    @ResponseBody
-    public ResponseEntity addTag(@CurrentAccount Account account, @RequestBody TagForm tagForm) {
+    public String addTag(@CurrentAccount Account account, @Validated TagForm tagForm, Errors errors) {
+        if (errors.hasErrors()) {
+            return "index";
+        }
+
         tagService.createTag(tagForm.getTagName());
-        return ResponseEntity.ok().build();
+        return "redirect:/";
     }
 
 

@@ -64,13 +64,16 @@
                                             <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-body">
-                                            <input type="text" id="tagName">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button id="saveBtn" type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
+                                        <form class="needs-validation col-12" th:object="${tagForm}" th:action="@{/blog/tags/add}" method="post" novalidate>
+                                            <div class="modal-body">
+                                                    <input type="text" th:field="*{tagName}">
+                                                    <small class="form-text text-danger" th:if="${#fields.hasErrors('tagName')}" th:errors="*{tagName}">tagName Error</small>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button id="saveBtn" type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -213,6 +216,28 @@
                $(btn).on('click', onAdd);
 
             });
+        </script>
+
+        <script type="application/javascript">
+            (function () {
+                'use strict';
+
+                window.addEventListener('load', function () {
+                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                    var forms = document.getElementsByClassName('needs-validation');
+
+                    // Loop over them and prevent submission
+                    Array.prototype.filter.call(forms, function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (form.checkValidity() === false) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+                }, false)
+            }())
         </script>
     </body>
 </html>
