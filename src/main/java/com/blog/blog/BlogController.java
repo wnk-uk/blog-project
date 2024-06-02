@@ -6,8 +6,6 @@ import com.blog.tag.TagForm;
 import com.blog.tag.TagService;
 import com.blog.tag.TagValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
@@ -30,7 +28,7 @@ public class BlogController {
     @PostMapping("/tags/add")
     public String addTag(@CurrentAccount Account account, @Validated TagForm tagForm, Errors errors) {
         if (errors.hasErrors()) {
-            return "index";
+            return "main";
         }
 
         tagService.createTag(tagForm.getTagName());
