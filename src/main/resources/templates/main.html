@@ -24,44 +24,17 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <h3>태그 목록</h3>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                                Vertically centered modal
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tagModal" th:if="${account} != null and ${#strings.equals(account.getRoleKey(), 'ADMIN')}">
+                                태그 추가
                             </button>
-                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <!--<form class="needs-validation col-12" th:object="${tagForm}" th:action="@{/blog/tags/add}" method="post" novalidate>
-                                            <div class="modal-body">
-                                                    <input type="text" th:field="*{tagName}">
-                                                    <small class="form-text text-danger" th:if="${#fields.hasErrors('tagName')}" th:errors="*{tagName}">tagName Error</small>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button id="saveBtn" type="submit" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                        </form>-->
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">Web Design</a></li>
-                                        <li><a href="#!">HTML</a></li>
-                                        <li><a href="#!">Freebies</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">JavaScript</a></li>
-                                        <li><a href="#!">CSS</a></li>
-                                        <li><a href="#!">Tutorials</a></li>
+                                        <li th:each="tag : ${tagList}">
+                                            <a th:href="@{/post/{id}(id=${tag.id})}" th:text="${tag.tagName}"></a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -148,8 +121,30 @@
                     </nav>
                 </div>
                 <!-- Side widgets-->
-
             </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="tagModal" tabindex="-1" aria-labelledby="tagModalCenterTitle" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="tagModalCenterTitle">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form class="needs-validation col-12" th:object="${tagForm}" th:action="@{/blog/tags/add}" method="post" novalidate>
+                            <div class="modal-body">
+                                    <input id="tagName" class="form-control" type="text" th:field="*{tagName}">
+                                    <small class="form-text text-danger" th:if="${#fields.hasErrors('tagName')}" th:errors="*{tagName}">tagName Error</small>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button id="saveBtn" type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <footer th:replace="fragments.html::footer"></footer>
@@ -174,8 +169,8 @@
                    tagRequest("/add", document.querySelector("#tagName").value);
                }
 
-               let btn = document.querySelector("#saveBtn");
-               $(btn).on('click', onAdd);
+               //let btn = document.querySelector("#saveBtn");
+               //$(btn).on('click', onAdd);
 
             });
         </script>

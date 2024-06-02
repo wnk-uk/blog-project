@@ -31,15 +31,14 @@ public class SecurityConfig {
         http.authorizeHttpRequests((auth) ->
                         auth.requestMatchers(
                                     AntPathRequestMatcher.antMatcher("/auth/**")
-                                ).hasRole(Role.ADMIN.getKey())
-                                .requestMatchers(
-                                        AntPathRequestMatcher.antMatcher("/h2-console/**")
-                                ).permitAll()
+                                ).hasAnyAuthority(Role.ADMIN.getKey())
                                 .requestMatchers(
                                         AntPathRequestMatcher.antMatcher("/blog/**")
                                 )
-                                //.hasRole(Role.ADMIN.getKey())
-                                .permitAll()
+                                .hasAnyAuthority(Role.ADMIN.getKey())
+                                .requestMatchers(
+                                        AntPathRequestMatcher.antMatcher("/h2-console/**")
+                                ).permitAll()
                                 .anyRequest().permitAll())
                 .logout((logout) ->  logout.logoutSuccessUrl("/"))
                 .csrf((csrf) -> csrf.disable())

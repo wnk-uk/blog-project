@@ -1,12 +1,12 @@
-package com.blog.tag;
+package com.blog.tag.validator;
 
 import com.blog.domain.Tag;
+import com.blog.tag.form.TagForm;
+import com.blog.tag.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
