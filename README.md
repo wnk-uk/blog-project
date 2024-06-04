@@ -1,5 +1,5 @@
 # 프로젝트 소개
-Spring boot, Vue3.js 프레임워크를 활용하여 실 서비스 예정중인 Blog Project 입니다.
+Spring boot, Vue3.js 프레임워크를 활용하여 실 서비스 목적으로 개발중인 Blog Project 입니다.
 
 # 기능 (구현중)
 * OAuth2.0 login
