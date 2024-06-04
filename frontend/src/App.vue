@@ -1,21 +1,35 @@
 <template>
-  <div>
-
-  </div>
+  <MainNav></MainNav>
+  <MainHeader></MainHeader>
+  <MainSection></MainSection>
+  <MainFooter></MainFooter>
 </template>
 
 <script>
-export default {
-  import AppHeader from '.';
+import MainNav from './components/MainNav.vue';
+import MainSection from './components/MainSection.vue';
+import MainFooter from './components/MainFooter.vue';
+import MainHeader from './components/MainHeader.vue';
+import axios from 'axios';
 
+
+export default {
   data() {
     return {
-      key: value
+      account : {}
     }
   },
   components: {
-    AppHeader,
-    AppNav
+    MainNav,
+    MainSection,
+    MainFooter,
+    MainHeader
+  },
+  methods : {
+    test() {
+      axios.get("/").then(response => {console.log(response)});
+    }
+    
   }
 }
 </script>
@@ -23,4 +37,3 @@ export default {
 <style scoped>
 
 </style>
-
