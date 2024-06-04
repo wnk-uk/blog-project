@@ -41,3 +41,9 @@ out/
 
 ## NPM ##
 src/main/resources/static/node_modules
+
+## Vue.js ##
+node_modules/
+dist/
+npm-debug.log
+yarn-error.log
