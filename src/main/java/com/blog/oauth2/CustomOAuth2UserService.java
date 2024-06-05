@@ -66,6 +66,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         return customUserDetails;
     }
 
+    public CustomUserDetails loadUserEmail(String userEmail) {
+        Account account = accountRepository.findByEmail(userEmail).orElseThrow(RuntimeException::new);
+        return new CustomUserDetails(account, List.of(new SimpleGrantedAuthority(account.getRoleKey())), null) ;
+    }
+
     private void updateRole(Account account) {
         if (appProperties.getAdminEmail().intern() == account.getEmail().intern()) account.setRole(Role.ADMIN);
     }
