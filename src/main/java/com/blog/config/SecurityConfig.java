@@ -2,6 +2,9 @@ package com.blog.config;
 
 import com.blog.oauth2.CustomOAuth2UserService;
 import com.blog.domain.Role;
+import com.blog.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
+import com.blog.oauth2.OAuth2FailureHandler;
+import com.blog.oauth2.OAuth2SuccessHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -24,6 +27,9 @@ import java.util.List;
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private final OAuth2FailureHandler oAuth2FailureHandler;
+    private final HttpCookieOAuth2AuthorizationRequestRepository cookieOAuth2AuthorizationRequestRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -42,7 +48,16 @@ public class SecurityConfig {
                                 .anyRequest().permitAll())
                 .logout((logout) ->  logout.logoutSuccessUrl("/"))
                 .csrf((csrf) -> csrf.disable())
-                .oauth2Login((oauth) -> oauth.userInfoEndpoint((user) -> user.userService(customOAuth2UserService)))
+                .oauth2Login((oauth) -> oauth
+//                    .authorizationEndpoint(config ->
+//                        config.authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository)
+//                    )
+                    .successHandler(oAuth2SuccessHandler)
+                    .failureHandler(oAuth2FailureHandler)
+                    .userInfoEndpoint(
+                            (user) -> user.userService(customOAuth2UserService)
+                    )
+                )
                 .headers((headerConfig) -> headerConfig.frameOptions(
                         HeadersConfigurer.FrameOptionsConfig::sameOrigin
                 ))
