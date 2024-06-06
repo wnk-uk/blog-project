@@ -19,7 +19,7 @@ import java.io.IOException;
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     //TODO 나중에 설정값으로 변경
-    static final String REDIRECT_URL = "http://localhost:8080/";
+    static final String REDIRECT_URL = "http://localhost:8080/oauth2/redirect";
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override

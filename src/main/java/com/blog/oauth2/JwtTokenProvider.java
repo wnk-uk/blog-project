@@ -50,17 +50,17 @@ public class JwtTokenProvider {
                 .getBody();
     }
 
-    public String getUsername(String token) {
+    public String getUserEmail(String token) {
         String info = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
-                .getBody().getSubject();
+                .getBody().getIssuer();
         return info;
     }
 
     public CustomUserDetails getUserDetails(String token) {
-        String email = this.getUsername(token);
+        String email = this.getUserEmail(token);
         return customOAuth2UserService.loadUserEmail(email);
     }
 

@@ -1,13 +1,12 @@
 <template>
   <MainNav></MainNav>
   <MainHeader></MainHeader>
-  <MainSection></MainSection>
+  <RouterView></RouterView>
   <MainFooter></MainFooter>
 </template>
 
 <script>
 import MainNav from './components/MainNav.vue';
-import MainSection from './components/MainSection.vue';
 import MainFooter from './components/MainFooter.vue';
 import MainHeader from './components/MainHeader.vue';
 import axios from 'axios';
@@ -21,7 +20,6 @@ export default {
   },
   components: {
     MainNav,
-    MainSection,
     MainFooter,
     MainHeader
   },
