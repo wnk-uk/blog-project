@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import router from '../router/router';
+    import router from '../router';
 
     export default {
         created() {
@@ -14,11 +14,12 @@
 
             if (token) {
                 sessionStorage.setItem("jwt-token", token);
+                this.$emit('setToken', token);
                 router.push({path: '/'})
             } else {
                 router.push({path: '/'})
             }
-        }
+        },
     }
 </script>
 

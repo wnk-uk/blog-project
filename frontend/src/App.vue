@@ -1,7 +1,7 @@
 <template>
   <MainNav></MainNav>
   <MainHeader></MainHeader>
-  <RouterView></RouterView>
+  <RouterView @setToken="setToken"></RouterView>
   <MainFooter></MainFooter>
 </template>
 
@@ -9,7 +9,7 @@
 import MainNav from './components/MainNav.vue';
 import MainFooter from './components/MainFooter.vue';
 import MainHeader from './components/MainHeader.vue';
-import axios from 'axios';
+import { mapActions } from 'vuex';
 
 
 export default {
@@ -24,10 +24,7 @@ export default {
     MainHeader
   },
   methods : {
-    test() {
-      axios.get("/").then(response => {console.log(response)});
-    }
-    
+    ...mapActions(['setToken', 'clearToken'])
   }
 }
 </script>

@@ -16,7 +16,7 @@
                             <li><a class="dropdown-item" href="/logout">Logout</a></li>
                         </ul>
                     </div>
-                    <div >
+                    <div>
                         <a href="http://localhost:8081/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
                     </div>
                 </li>
