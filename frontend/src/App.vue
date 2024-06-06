@@ -1,7 +1,7 @@
 <template>
-  <MainNav></MainNav>
+  <MainNav v-bind:name="accountName" v-bind:email="accountEmail" v-bind:image="accountImage"></MainNav>
   <MainHeader></MainHeader>
-  <RouterView @setToken="setToken"></RouterView>
+  <RouterView @setToken="setToken" @loadAccount="loadAccount"></RouterView>
   <MainFooter></MainFooter>
 </template>
 
@@ -10,12 +10,15 @@ import MainNav from './components/MainNav.vue';
 import MainFooter from './components/MainFooter.vue';
 import MainHeader from './components/MainHeader.vue';
 import { mapActions } from 'vuex';
+import axios from './services/axios';
 
 
 export default {
   data() {
     return {
-      account : {}
+        accountName : null,
+        accountEmail : null,
+        accountImage : null        
     }
   },
   components: {
@@ -24,7 +27,20 @@ export default {
     MainHeader
   },
   methods : {
-    ...mapActions(['setToken', 'clearToken'])
+    ...mapActions(['setToken', 'clearToken']),
+    loadAccount() {
+      axios.get("/api/users/me")
+        .then(response => {
+          this.accountName = response.data.name;
+          this.accountEmail = response.data.email;
+          this.accountImage = response.data.picture;
+        }).catch(error => {
+            console.error(error);
+        });
+    }
+  },
+  created() {
+    this.loadAccount();
   }
 }
 </script>

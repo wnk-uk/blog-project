@@ -15,6 +15,7 @@
             if (token) {
                 sessionStorage.setItem("jwt-token", token);
                 this.$emit('setToken', token);
+                this.$emit('loadAccount');
                 router.push({path: '/'})
             } else {
                 router.push({path: '/'})
