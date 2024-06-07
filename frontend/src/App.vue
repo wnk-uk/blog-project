@@ -1,7 +1,7 @@
 <template>
   <MainNav v-bind:name="accountName" v-bind:email="accountEmail" v-bind:image="accountImage"></MainNav>
   <MainHeader></MainHeader>
-  <RouterView @setToken="setToken" @loadAccount="loadAccount"></RouterView>
+  <RouterView @setToken="setToken" @loadAccount="loadAccount" @findTags="findTags" :tags="tags" @addTag="addTag"></RouterView>
   <MainFooter></MainFooter>
 </template>
 
@@ -18,7 +18,8 @@ export default {
     return {
         accountName : null,
         accountEmail : null,
-        accountImage : null        
+        accountImage : null,
+        tags : null        
     }
   },
   components: {
@@ -34,6 +35,26 @@ export default {
           this.accountName = response.data.name;
           this.accountEmail = response.data.email;
           this.accountImage = response.data.picture;
+        }).catch(error => {
+            console.error(error);
+        });
+    },
+    findTags() {
+      axios.get("/api/tags")
+        .then(response => {
+          this.tags = response.data;
+        }).catch(error => {
+            console.error(error);
+        });
+    },
+    addTag(tagName) {
+      console.log(tagName);
+      axios.post("/api/tags/add", {
+        tagName : tagName
+      })
+        .then(response => {
+          console.log(response);
+          this.findTags();
         }).catch(error => {
             console.error(error);
         });

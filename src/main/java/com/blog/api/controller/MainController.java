@@ -1,4 +1,4 @@
-package com.blog.api.controller.main;
+package com.blog.api.controller;
 
 import com.blog.api.anotation.CurrentAccount;
 import com.blog.api.domain.account.Account;

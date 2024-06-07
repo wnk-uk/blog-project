@@ -44,5 +44,6 @@
     }
     .dropdown-toggle:empty::after {
         margin-left: .255em;
+        visibility : hidden;
     }
 </style>

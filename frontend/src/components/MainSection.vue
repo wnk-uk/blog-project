@@ -6,7 +6,7 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <h3>태그 목록</h3>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tagModal" th:if="${account} != null and ${#strings.equals(account.getRoleKey(), 'ADMIN')}">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tagModal">
                                 태그 추가
                             </button>
                         </div>
@@ -14,8 +14,8 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <ul class="list-unstyled mb-0">
-                                        <li th:each="tag : ${tagList}">
-                                            <a th:href="@{/post/{id}(id=${tag.id})}" th:text="${tag.tagName}"></a>
+                                        <li v-for="tag in tags" :key="tag.id">
+                                            <a :href="'/tags/' + tag.id">{{ tag.tagName }}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -24,8 +24,12 @@
                     </div>
                     <!-- Side widget-->
                     <div class="card mb-4">
-                        <div class="card-header">뭘넣지</div>
-                        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+                        <div class="card-header">link</div>
+                        <div class="card-body">
+                            <div>gmail</div>
+                            <div>github</div>
+                            <div>간단소개</div>
+                        </div>
                     </div>
                 </div>
 
@@ -105,11 +109,45 @@
                 <!-- Side widgets-->
             </div>
         </div>    
+
+        <div class="modal fade" id="tagModal" tabindex="-1" aria-labelledby="tagModalCenterTitle" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="tagModalCenterTitle">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form class="needs-validation col-12" action="" @submit.prevent="submitForm" method="post" novalidate>
+                            <div class="modal-body">
+                                    <input id="tagName" class="form-control" type="text">
+                                    <small class="form-text text-danger" v-if="message">{{ message }}</small>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button id="saveBtn" type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
 </template>
 
 <script>
+    import { onMounted } from 'vue';
     export default {
-        
+        props:['tags', 'message'],
+        setup(props, { emit }) {
+            const submitForm = () => {
+                emit('addTag', document.querySelector('#tagName').value);
+            }
+
+            onMounted(() => {
+              emit('findTags');
+            });
+
+            return { submitForm };
+        }
     }
 </script>
 
