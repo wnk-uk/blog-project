@@ -1,7 +1,8 @@
 package com.blog.config;
 
+import com.blog.api.service.account.CustomOAuth2UserService;
 import com.blog.oauth2.*;
-import com.blog.domain.Role;
+import com.blog.api.domain.account.Role;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;

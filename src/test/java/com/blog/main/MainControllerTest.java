@@ -1,8 +1,8 @@
 package com.blog.main;
 
 import com.blog.WithAccount;
-import com.blog.account.AccountRepository;
-import com.blog.oauth2.CustomOAuth2UserService;
+import com.blog.api.repository.account.AccountRepository;
+import com.blog.api.service.account.CustomOAuth2UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 

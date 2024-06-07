@@ -1,9 +1,7 @@
-package com.blog.tag;
+package com.blog.api.repository.tag;
 
-import com.blog.domain.Tag;
+import com.blog.api.domain.blog.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
 
 public interface TagRepository extends JpaRepository<Tag, Long> {
 

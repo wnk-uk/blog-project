@@ -1,4 +1,4 @@
-package com.blog.domain;
+package com.blog.api.domain.blog;
 
 
 import jakarta.persistence.Column;

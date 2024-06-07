@@ -1,11 +1,10 @@
-package com.blog.tag;
+package com.blog.api.service.tag;
 
-import com.blog.domain.Tag;
+import com.blog.api.domain.blog.Tag;
+import com.blog.api.repository.tag.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

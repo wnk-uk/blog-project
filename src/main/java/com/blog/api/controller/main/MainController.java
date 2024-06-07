@@ -1,11 +1,11 @@
-package com.blog.main;
+package com.blog.api.controller.main;
 
-import com.blog.account.CurrentAccount;
-import com.blog.domain.Account;
-import com.blog.domain.Tag;
-import com.blog.tag.TagRepository;
-import com.blog.tag.TagService;
-import com.blog.tag.form.TagForm;
+import com.blog.api.anotation.CurrentAccount;
+import com.blog.api.domain.account.Account;
+import com.blog.api.domain.blog.Tag;
+import com.blog.api.repository.tag.TagRepository;
+import com.blog.api.service.tag.TagService;
+import com.blog.api.domain.tag.form.TagForm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

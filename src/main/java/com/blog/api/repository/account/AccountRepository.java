@@ -1,6 +1,6 @@
-package com.blog.account;
+package com.blog.api.repository.account;
 
-import com.blog.domain.Account;
+import com.blog.api.domain.account.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

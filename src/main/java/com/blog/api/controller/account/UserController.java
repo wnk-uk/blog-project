@@ -1,8 +1,8 @@
-package com.blog.api;
+package com.blog.api.controller.account;
 
-import com.blog.account.CurrentAccount;
-import com.blog.domain.Account;
-import com.blog.oauth2.CustomOAuth2UserService;
+import com.blog.api.anotation.CurrentAccount;
+import com.blog.api.domain.account.Account;
+import com.blog.api.service.account.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

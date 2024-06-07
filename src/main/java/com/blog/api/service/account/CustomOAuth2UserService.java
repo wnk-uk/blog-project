@@ -1,12 +1,14 @@
-package com.blog.oauth2;
+package com.blog.api.service.account;
 
-import com.blog.account.AccountRepository;
+import com.blog.api.repository.account.AccountRepository;
+import com.blog.api.domain.account.Account;
+import com.blog.api.domain.account.CustomUserDetails;
+import com.blog.api.domain.account.OAuthAttributes;
+import com.blog.api.domain.account.Role;
 import com.blog.config.AppProperties;
-import com.blog.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;

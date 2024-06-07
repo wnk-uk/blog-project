@@ -1,10 +1,10 @@
-package com.blog.blog;
+package com.blog.api.controller.blog;
 
-import com.blog.account.CurrentAccount;
-import com.blog.domain.Account;
-import com.blog.tag.form.TagForm;
-import com.blog.tag.TagService;
-import com.blog.tag.validator.TagValidator;
+import com.blog.api.anotation.CurrentAccount;
+import com.blog.api.domain.account.Account;
+import com.blog.api.domain.tag.form.TagForm;
+import com.blog.api.service.tag.TagService;
+import com.blog.api.domain.tag.validator.TagValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequiredArgsConstructor

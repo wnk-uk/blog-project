@@ -1,7 +1,7 @@
 package com.blog.oauth2;
 
-import com.blog.domain.Account;
-import com.blog.domain.CustomUserDetails;
+import com.blog.api.domain.account.Account;
+import com.blog.api.domain.account.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;

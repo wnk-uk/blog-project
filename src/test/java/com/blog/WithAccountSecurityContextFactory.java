@@ -1,8 +1,8 @@
 package com.blog;
 
-import com.blog.domain.Account;
-import com.blog.domain.CustomUserDetails;
-import com.blog.domain.OAuthAttributes;
+import com.blog.api.domain.account.Account;
+import com.blog.api.domain.account.CustomUserDetails;
+import com.blog.api.domain.account.OAuthAttributes;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
