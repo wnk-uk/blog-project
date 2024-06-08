@@ -5,10 +5,10 @@
                     <!-- Categories widget-->
                     <div class="card mb-4">
                         <div class="card-header">
-                            <h3>태그 목록</h3>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tagModal">
-                                태그 추가
-                            </button>
+                            <div>
+                                <span>태그 목록</span>
+                                <button type="button" style="float:right;" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#tagModal">+</button>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -26,7 +26,7 @@
                     <div class="card mb-4">
                         <div class="card-header">link</div>
                         <div class="card-body">
-                            <div>gmail</div>
+                            <div>gmail</div>n
                             <div>github</div>
                             <div>간단소개</div>
                         </div>

@@ -1,7 +1,7 @@
 <template>
-   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dar mb-4" style="background-color: whitesmoke !important;">
     <div class="container">
-        <a class="navbar-brand" href="/">Uk's Blog</a>
+        <a class="navbar-brand" href="/" style="color:black; font-weight:bold;">Uk's Blog</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -18,7 +18,7 @@
                         </ul>
                     </div>
                     <div v-if="!name">
-                        <a href="http://localhost:8081/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+                        <a href="http://localhost:8081/oauth2/authorization/google" class="btn" role="button">로그인</a>
                     </div>
                 </li>
             </ul>
