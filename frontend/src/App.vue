@@ -1,6 +1,6 @@
 <template>
   <MainNav v-bind:name="accountName" v-bind:email="accountEmail" v-bind:image="accountImage"></MainNav>
-  <!-- <MainHeader></MainHeader> -->
+  <MainHeader></MainHeader>
   <RouterView @setToken="setToken" @loadAccount="loadAccount" @findTags="findTags" :tags="tags" @addTag="addTag"></RouterView>
   <MainFooter></MainFooter>
 </template>
@@ -8,7 +8,7 @@
 <script>
 import MainNav from './components/MainNav.vue';
 import MainFooter from './components/MainFooter.vue';
-// import MainHeader from './components/MainHeader.vue';
+import MainHeader from './components/MainHeader.vue';
 import { mapActions } from 'vuex';
 import axios from './services/axios';
 
@@ -25,7 +25,7 @@ export default {
   components: {
     MainNav,
     MainFooter,
-    // MainHeader
+    MainHeader
   },
   methods : {
     ...mapActions(['setToken', 'clearToken']),
@@ -67,5 +67,5 @@ export default {
 </script>
 
 <style scoped>
-
+@import '../src/assets/css/styles.css';
 </style>

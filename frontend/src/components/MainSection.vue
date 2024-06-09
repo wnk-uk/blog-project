@@ -3,9 +3,8 @@
             <div class="row">
                 <div class="col-lg-3">
                     <!-- Categories widget-->
-                    <div class="card mb-4">
                         <div class="card-header">
-                            <div>
+                            <div style="display:flex; align-items: center; justify-content:space-between">
                                 <span>태그 목록</span>
                                 <button type="button" style="float:right;" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#tagModal">+</button>
                             </div>
@@ -21,16 +20,15 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                     <!-- Side widget-->
-                    <div class="card mb-4">
+                    <!-- <div class="card mb-4">
                         <div class="card-header">link</div>
                         <div class="card-body">
-                            <div>gmail</div>n
+                            <div>gmail</div>
                             <div>github</div>
                             <div>간단소개</div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- Blog entries-->
@@ -114,11 +112,12 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="tagModalCenterTitle">Modal title</h5>
+                            <h5 class="modal-title" id="tagModalCenterTitle">태그추가</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form class="needs-validation col-12" action="" @submit.prevent="submitForm" method="post" novalidate>
                             <div class="modal-body">
+                                    <label for="tagName">태그명</label>
                                     <input id="tagName" class="form-control" type="text">
                                     <small class="form-text text-danger" v-if="message">{{ message }}</small>
                             </div>

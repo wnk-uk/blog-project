@@ -1,7 +1,16 @@
 <template>
-    <header class="py-5 bg-light border-bottom mb-4">
+    <header class="py-5">
             <div class="container">
-                <!-- <img src="../assets/images/luca-bravo-XJXWbfSo2f0-unsplash.jpg" /> -->
+                 <div class="profile-wrapper">
+                    <div class="profile-img">
+                    </div>
+                    <div>
+                        <div>
+                            #UK's
+                        </div>
+                        <div>발전을 위한 공간으로 사용하겠습니다.</div>
+                    </div>
+                </div>
             </div>
     </header>
 </template>
@@ -13,6 +22,19 @@
 </script>
 
 <style scoped>
-    .head-img {
+    .profile-img {
+        flex: 0 0 auto;
+        margin-right: 16px;
+        width: 128px;
+        height: 128px;
+        border-radius: 999px;
+        background-size: cover;
+        background-position: center center;
+        border: 1px solid black;
+    }
+    .profile-wrapper {
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
     }
 </style>
