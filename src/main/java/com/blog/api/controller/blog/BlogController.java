@@ -35,7 +35,11 @@ public class BlogController {
 
     @PostMapping("/tags/add")
     @ResponseBody
-    public ResponseEntity addTag(@CurrentAccount Account account, @RequestBody TagForm tagForm) {
+    public ResponseEntity addTag(@CurrentAccount Account account, @Validated @RequestBody TagForm tagForm, Errors errors) {
+        if (errors.hasErrors()) {
+            throw new RuntimeException("동일한 명칭의 태그가 존재합니다.");
+        }
+
         tagService.createTag(tagForm.getTagName());
         return ResponseEntity.ok().build();
     }

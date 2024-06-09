@@ -1,7 +1,7 @@
 <template>
-  <MainNav v-bind:name="accountName" v-bind:email="accountEmail" v-bind:image="accountImage"></MainNav>
+  <MainNav :name="accountName" :email="accountEmail" :image="accountImage"></MainNav>
   <MainHeader></MainHeader>
-  <RouterView @setToken="setToken" @loadAccount="loadAccount" @findTags="findTags" :tags="tags" @addTag="addTag"></RouterView>
+  <RouterView @setToken="setToken" @loadAccount="loadAccount" @findTags="findTags" :tags="tags" @addTag="addTag" :message="message"></RouterView>
   <MainFooter></MainFooter>
 </template>
 
@@ -19,7 +19,8 @@ export default {
         accountName : null,
         accountEmail : null,
         accountImage : null,
-        tags : null        
+        tags : null,
+        message : null
     }
   },
   components: {
@@ -32,11 +33,15 @@ export default {
     loadAccount() {
       axios.get("/api/users/me")
         .then(response => {
+          console.log(response);
           this.accountName = response.data.name;
           this.accountEmail = response.data.email;
           this.accountImage = response.data.picture;
         }).catch(error => {
-            console.error(error);
+          this.accountName = null;
+          this.accountEmail = null;
+          this.accountImage = null;
+          console.log(error);
         });
     },
     findTags() {
@@ -48,7 +53,6 @@ export default {
         });
     },
     addTag(tagName) {
-      console.log(tagName);
       axios.post("/api/tags/add", {
         tagName : tagName
       })
@@ -56,7 +60,12 @@ export default {
           console.log(response);
           this.findTags();
         }).catch(error => {
-            console.error(error);
+            if (error.response) {
+              this.message = error.response.data.message;
+            } else {
+              console.error('Network Error:', error.message);
+            }
+            
         });
     }
   },

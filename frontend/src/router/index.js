@@ -6,11 +6,12 @@ import MainSection from '../components/MainSection.vue'
 const routes = [
     { 
         path: '/oauth2/redirect',
-        component: RedirectView 
+        component: RedirectView
     },
     {
         path: '/',
         component : MainSection
+        ,props:true
     },
     // {
     //     path: '/post',

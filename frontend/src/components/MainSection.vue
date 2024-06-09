@@ -4,9 +4,9 @@
                 <div class="col-lg-3">
                     <!-- Categories widget-->
                         <div class="card-header">
-                            <div style="display:flex; align-items: center; justify-content:space-between">
+                            <div style="display:flex; align-items: center; justify-content:space-between; border-bottom: 1px solid lightgray;">
                                 <span>태그 목록</span>
-                                <button type="button" style="float:right;" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#tagModal">+</button>
+                                <button v-if="state.role === 'ADMIN'" type="button" style="background-color: white; border:0px;" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#tagModal">+</button>
                             </div>
                         </div>
                         <div class="card-body">
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                     <!-- Pagination-->
-                    <nav aria-label="Pagination">
+                    <!-- <nav aria-label="Pagination">
                         <hr class="my-0" />
                         <ul class="pagination justify-content-center my-4">
                             <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
@@ -102,7 +102,7 @@
                             <li class="page-item"><a class="page-link" href="#!">15</a></li>
                             <li class="page-item"><a class="page-link" href="#!">Older</a></li>
                         </ul>
-                    </nav>
+                    </nav> -->
                 </div>
                 <!-- Side widgets-->
             </div>
@@ -122,8 +122,8 @@
                                     <small class="form-text text-danger" v-if="message">{{ message }}</small>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button id="saveBtn" type="submit" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="showModal = false">종료</button>
+                                <button id="saveBtn" type="submit" class="btn btn-primary">저장</button>
                             </div>
                         </form>
                     </div>
@@ -133,19 +133,35 @@
 </template>
 
 <script>
-    import { onMounted } from 'vue';
+    import axios from 'axios';
+import { onMounted, reactive } from 'vue';
     export default {
         props:['tags', 'message'],
         setup(props, { emit }) {
+            let showModal = true;
+
             const submitForm = () => {
                 emit('addTag', document.querySelector('#tagName').value);
             }
 
-            onMounted(() => {
-              emit('findTags');
+            const state = reactive({
+                role: null,
+                error: null
             });
 
-            return { submitForm };
+            onMounted(async () => {
+              emit('findTags');
+              
+              try {
+                const response = await axios.get('/api/users/me');
+                state.role = response.data.role;  
+              } catch (error) {
+                state.error = error.message;
+              }
+              
+            });
+
+            return { submitForm, state, showModal};
         }
     }
 </script>

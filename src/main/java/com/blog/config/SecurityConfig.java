@@ -46,7 +46,10 @@ public class SecurityConfig {
                                         AntPathRequestMatcher.antMatcher("/h2-console/**")
                                 ).permitAll()
                                 .anyRequest().permitAll())
-                .logout((logout) ->  logout.logoutSuccessUrl("/"))
+                .logout(
+                        (logout) ->
+                                logout.logoutUrl("/logout").logoutSuccessUrl("/")
+                )
                 .csrf((csrf) -> csrf.disable())
                 .oauth2Login((oauth) -> oauth
 //                    .authorizationEndpoint(config ->

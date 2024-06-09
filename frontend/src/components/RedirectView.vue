@@ -5,21 +5,24 @@
 </template>
 
 <script>
+    import { useRoute } from 'vue-router';
+    import { onMounted } from 'vue';
     import router from '../router';
 
     export default {
-        created() {
-            const token = this.$route.query.token;
-            console.log(token);
-
+        setup(props, { emit }) {
+            const route = useRoute();
+            const token = route.query.token;
+            
             if (token) {
                 sessionStorage.setItem("jwt-token", token);
-                this.$emit('setToken', token);
-                this.$emit('loadAccount');
-                router.push({path: '/'})
-            } else {
-                router.push({path: '/'})
+                emit('setToken', token);
+                emit('loadAccount');
             }
+
+            onMounted(() => {
+                router.push({path: '/'})
+            });
         },
     }
 </script>

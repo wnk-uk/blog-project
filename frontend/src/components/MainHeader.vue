@@ -1,14 +1,17 @@
 <template>
     <header class="py-5">
             <div class="container">
-                 <div class="profile-wrapper">
-                    <div class="profile-img">
-                    </div>
-                    <div>
-                        <div>
-                            #UK's
+                <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="profile-wrapper col-lg-9">
+                        <div class="profile-img">
                         </div>
-                        <div>발전을 위한 공간으로 사용하겠습니다.</div>
+                        <div>
+                            <div>
+                                #UK's
+                            </div>
+                            <div>발전을 위한 공간으로 사용하겠습니다.</div>
+                        </div>
                     </div>
                 </div>
             </div>
