@@ -1,7 +1,7 @@
 <template>
   <MainNav :name="accountName" :email="accountEmail" :image="accountImage"></MainNav>
   <MainHeader></MainHeader>
-  <RouterView @setToken="setToken" @loadAccount="loadAccount" @findTags="findTags" :tags="tags" @addTag="addTag" :message="message"></RouterView>
+  <RouterView @setToken="setToken" @loadAccount="loadAccount" @findTags="findTags" :tags="tags" @addTag="addTag" :message="message" :success="successFlag" @resetFlag="resetFlag"></RouterView>
   <MainFooter></MainFooter>
 </template>
 
@@ -20,13 +20,14 @@ export default {
         accountEmail : null,
         accountImage : null,
         tags : null,
-        message : null
+        message : null,
+        successFlag : false
     }
   },
   components: {
     MainNav,
     MainFooter,
-    MainHeader
+    MainHeader,
   },
   methods : {
     ...mapActions(['setToken', 'clearToken']),
@@ -58,6 +59,7 @@ export default {
       })
         .then(response => {
           console.log(response);
+          this.successFlag = true;
           this.findTags();
         }).catch(error => {
             if (error.response) {
@@ -67,6 +69,10 @@ export default {
             }
             
         });
+    },
+    resetFlag() {
+      this.successFlag = false;
+      this.message = null;
     }
   },
   created() {
@@ -77,4 +83,15 @@ export default {
 
 <style scoped>
 @import '../src/assets/css/styles.css';
+
+@font-face {
+    font-family: 'KCC-Hanbit';
+    src: url('./assets/fonts/KCC-Hanbit.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+  font-family: 'KCC-Hanbit', sans-serif;
+}
 </style>

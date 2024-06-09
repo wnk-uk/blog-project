@@ -10,6 +10,7 @@
     import router from '../router';
 
     export default {
+        emits: ['setToken', 'loadAccount', 'findTags', 'addTag'],
         setup(props, { emit }) {
             const route = useRoute();
             const token = route.query.token;
@@ -17,8 +18,12 @@
             if (token) {
                 sessionStorage.setItem("jwt-token", token);
                 emit('setToken', token);
-                emit('loadAccount');
+            } else {
+                sessionStorage.removeItem("jwt-token");
+                emit('setToken', null);
+                
             }
+            emit('loadAccount');
 
             onMounted(() => {
                 router.push({path: '/'})

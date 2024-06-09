@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,9 @@ import java.io.IOException;
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     //TODO 나중에 설정값으로 변경
-    static final String REDIRECT_URL = "http://localhost:8080/oauth2/redirect";
+    @Value("${spring.front.url}")
+    private String FRONT_URL;
+    private static final String REDIRECT_URL = "/oauth2/redirect";
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
@@ -28,7 +31,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         String token = jwtTokenProvider.generateToken(account);
 
-        String uri = UriComponentsBuilder.fromUriString(REDIRECT_URL)
+        String uri = UriComponentsBuilder.fromUriString(FRONT_URL + REDIRECT_URL)
                         .queryParam("token", token)
                 .build().toUriString();
 

@@ -8,6 +8,10 @@ const routes = [
         path: '/oauth2/redirect',
         component: RedirectView
     },
+    { 
+        path: '/oauth2/logout',
+        component: RedirectView
+    },
     {
         path: '/',
         component : MainSection

@@ -5,16 +5,16 @@
                     <!-- Categories widget-->
                         <div class="card-header">
                             <div style="display:flex; align-items: center; justify-content:space-between; border-bottom: 1px solid lightgray;">
-                                <span>태그 목록</span>
+                                <div style="display:flex; align-items:center; height: 36px;;">태그 목록</div>
                                 <button v-if="state.role === 'ADMIN'" type="button" style="background-color: white; border:0px;" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#tagModal">+</button>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <ul class="list-unstyled mb-0">
-                                        <li v-for="tag in tags" :key="tag.id">
-                                            <a :href="'/tags/' + tag.id">{{ tag.tagName }}</a>
+                                    <ul class="list-unstyled mb-0 mt-2">
+                                        <li v-for="tag in tags" :key="tag.id" class="link-wrapper">
+                                            <a :href="'/tags/' + tag.id" class="link-btn">{{ tag.tagName }}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -122,7 +122,7 @@
                                     <small class="form-text text-danger" v-if="message">{{ message }}</small>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="showModal = false">종료</button>
+                                <button id="close" type="button" class="btn btn-secondary" data-bs-dismiss="modal">종료</button>
                                 <button id="saveBtn" type="submit" class="btn btn-primary">저장</button>
                             </div>
                         </form>
@@ -136,9 +136,9 @@
     import axios from 'axios';
 import { onMounted, reactive } from 'vue';
     export default {
-        props:['tags', 'message'],
+        emits: ['setToken', 'loadAccount', 'findTags', 'addTag', 'resetFlag'],
+        props:['tags', 'message', 'success'],
         setup(props, { emit }) {
-            let showModal = true;
 
             const submitForm = () => {
                 emit('addTag', document.querySelector('#tagName').value);
@@ -154,18 +154,45 @@ import { onMounted, reactive } from 'vue';
               
               try {
                 const response = await axios.get('/api/users/me');
-                state.role = response.data.role;  
+                state.role = response.data.role;
               } catch (error) {
                 state.error = error.message;
               }
               
             });
 
-            return { submitForm, state, showModal};
+            function handleClick() {
+                document.querySelector('#close').click();
+                document.querySelector('#tagName').value = "";
+                emit('resetFlag');
+            }
+
+            return { submitForm, state, handleClick };
+        },
+        watch: {
+            success(newVlaue) {
+                if (newVlaue) {
+                    this.handleClick();
+                }
+            }
         }
     }
 </script>
 
 <style scoped>
+    .link-btn {
+        color: inherit;
+        text-decoration: none;
+    }
 
+    .link-wrapper {
+        margin-bottom: 10px;
+        color: rgb(134, 142, 150);
+        cursor: pointer;
+        transition: color 0.3s ease 0s;
+    }
+
+    * {
+        font-family: 'KCC-Hanbit', sans-serif;
+    }
 </style>

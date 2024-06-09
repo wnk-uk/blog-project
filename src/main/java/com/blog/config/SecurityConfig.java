@@ -5,6 +5,7 @@ import com.blog.oauth2.*;
 import com.blog.api.domain.account.Role;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,11 @@ import java.util.List;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    @Value("${spring.front.url}")
+    private String FRONT_URL;
+
+    private static String LOGOUT_URL = "/oauth2/logout";
 
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
@@ -48,7 +54,7 @@ public class SecurityConfig {
                                 .anyRequest().permitAll())
                 .logout(
                         (logout) ->
-                                logout.logoutUrl("/logout").logoutSuccessUrl("/")
+                                logout.logoutUrl("/logout").logoutSuccessUrl(FRONT_URL + LOGOUT_URL)
                 )
                 .csrf((csrf) -> csrf.disable())
                 .oauth2Login((oauth) -> oauth
@@ -70,7 +76,7 @@ public class SecurityConfig {
                             @Override
                             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                                 CorsConfiguration config = new CorsConfiguration();
-                                config.setAllowedOrigins(List.of("http://localhost:8080"));
+                                config.setAllowedOrigins(List.of(FRONT_URL));
                                 config.setAllowedMethods(List.of("*"));
                                 config.setAllowCredentials(true);
                                 config.setAllowedHeaders(List.of("*"));
