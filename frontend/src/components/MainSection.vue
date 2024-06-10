@@ -20,15 +20,6 @@
                                 </div>
                             </div>
                         </div>
-                    <!-- Side widget-->
-                    <!-- <div class="card mb-4">
-                        <div class="card-header">link</div>
-                        <div class="card-body">
-                            <div>gmail</div>
-                            <div>github</div>
-                            <div>간단소개</div>
-                        </div>
-                    </div> -->
                 </div>
 
                 <!-- Blog entries-->

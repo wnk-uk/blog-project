@@ -3,6 +3,7 @@ package com.blog.api.domain.account;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Getter
@@ -38,6 +39,7 @@ public class OAuthAttributes {
                 .role(Role.USER)
                 .attributeId(this.nameAttributeKey)
                 .registrationId(this.registrationId)
+                .joinAt(LocalDateTime.now())
                 .build();
     }
 }

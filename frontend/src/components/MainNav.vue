@@ -42,9 +42,15 @@
         background-size:cover; 
         border-radius: 50px;
         border:white !important;
+
     }
     .dropdown-toggle:empty::after {
         margin-left: .255em;
         visibility : hidden;
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
     }
 </style>

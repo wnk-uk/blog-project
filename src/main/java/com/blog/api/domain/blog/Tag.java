@@ -1,11 +1,11 @@
 package com.blog.api.domain.blog;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,5 +22,9 @@ public class Tag {
 
     @Column(unique = true, nullable = false)
     private String tagName;
+
+    @OneToMany
+    private List<Post> posts;
+
 
 }

@@ -11,6 +11,11 @@
                                 #UK's
                             </div>
                             <div>발전을 위한 공간으로 사용하겠습니다.</div>
+                            <div>
+                                <a href="https://github.com/wnk-uk/blog-project" target="_black" class="header-link">
+                                    <font-awesome-icon class="header-icon" :icon="['fab', 'github']" />
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -39,5 +44,14 @@
         display: flex;
         -webkit-box-align: center;
         align-items: center;
+    }
+
+    .header-icon {
+        font-size: 35px;
+    }
+
+    .header-link {
+        text-decoration: none;
+        color:black;
     }
 </style>

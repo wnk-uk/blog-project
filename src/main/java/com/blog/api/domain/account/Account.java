@@ -3,6 +3,8 @@ package com.blog.api.domain.account;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -33,6 +35,8 @@ public class Account {
 
     @Column
     private String picture;
+
+    private LocalDateTime joinAt;
 
     public String getRoleKey() {
         return this.role.getKey();

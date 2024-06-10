@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import RedirectView from '../components/RedirectView.vue'
 import MainSection from '../components/MainSection.vue'
-//import PostList from '../Pages/PostList.Vue'
+import TagList from '../views/TagList.vue'
 
 const routes = [
     { 
@@ -17,10 +17,10 @@ const routes = [
         component : MainSection
         ,props:true
     },
-    // {
-    //     path: '/post',
-    //     component : PostList
-    // }
+     {
+         path: '/tags/:id',
+         component : TagList
+     }
 ]
 
 const router = createRouter({
