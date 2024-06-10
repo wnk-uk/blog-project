@@ -1,81 +1,55 @@
 <template>
-  <MainNav :name="accountName" :email="accountEmail" :image="accountImage"></MainNav>
-  <MainHeader></MainHeader>
-  <RouterView @setToken="setToken" @loadAccount="loadAccount" @findTags="findTags" :tags="tags" @addTag="addTag" :message="message" :success="successFlag" @resetFlag="resetFlag"></RouterView>
+  <MainNav :account="account"></MainNav>
+  <RouterView @setToken="setToken" @fetchTags="fetchTags" @addNewTag="addNewTag" ></RouterView>
   <MainFooter></MainFooter>
 </template>
 
 <script>
 import MainNav from './components/MainNav.vue';
 import MainFooter from './components/MainFooter.vue';
-import MainHeader from './components/MainHeader.vue';
 import { mapActions } from 'vuex';
-import axios from './services/axios';
-
+import TagService from './services/TagService';
+import AccountService from './services/AccountService';
 
 export default {
   data() {
     return {
-        accountName : null,
-        accountEmail : null,
-        accountImage : null,
-        tags : null,
-        message : null,
-        successFlag : false
+        account : null,
     }
   },
   components: {
     MainNav,
     MainFooter,
-    MainHeader,
   },
   methods : {
-    ...mapActions(['setToken', 'clearToken']),
-    loadAccount() {
-      axios.get("/api/users/me")
-        .then(response => {
-          console.log(response);
-          this.accountName = response.data.name;
-          this.accountEmail = response.data.email;
-          this.accountImage = response.data.picture;
-        }).catch(error => {
-          this.accountName = null;
-          this.accountEmail = null;
-          this.accountImage = null;
-          console.log(error);
-        });
+    ...mapActions(['setToken', 'clearToken', 'setTags', 'setTagsMessage', 'setTagsIsSuccess']),
+    async loadAccount() {
+      try {
+        this.account = await AccountService.loadAccount();
+      } catch(error) {
+        this.account = null;
+      }
     },
-    findTags() {
-      axios.get("/api/tags")
-        .then(response => {
-          this.tags = response.data;
-        }).catch(error => {
-            console.error(error);
-        });
+    async fetchTags() {
+      try {
+        this.setTags(await TagService.fetchTags());
+      } catch (error) {
+        console.log(error);
+      }
     },
-    addTag(tagName) {
-      axios.post("/api/tags/add", {
-        tagName : tagName
-      })
-        .then(response => {
-          console.log(response);
-          this.successFlag = true;
-          this.findTags();
-        }).catch(error => {
-            if (error.response) {
-              this.message = error.response.data.message;
-            } else {
-              console.error('Network Error:', error.message);
-            }
-            
-        });
-    },
-    resetFlag() {
-      this.successFlag = false;
-      this.message = null;
+    async addNewTag(tagName) {
+        try {
+            this.setTagsIsSuccess(await TagService.addNewTag(tagName));
+            this.setTagsMessage(null);
+            this.fetchTags();
+          } catch (error) {
+            this.setTagsMessage(error.message);
+            this.setTagsIsSuccess(false);
+        }
     }
   },
   created() {
+    this.setToken(sessionStorage.getItem("jwt-token"));
     this.loadAccount();
   }
 }

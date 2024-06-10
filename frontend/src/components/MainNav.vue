@@ -7,17 +7,17 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link" aria-current="page" href="#">search</a></li>
                 <li class="nav-item">
-                    <div v-if="name" class="dropdown"> <!-- v-if -->
+                    <div v-if="account" class="dropdown"> <!-- v-if -->
                         <button class="btn btn-secondary dropdown-toggle profile" 
                                 type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-                                :style="{ backgroundImage : 'url(' + image + ')' }" >
+                                :style="{ backgroundImage : 'url(' + account.picture + ')' }" >
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" href="#">Action</a></li>
                             <li><a class="dropdown-item" href="http://localhost:8081/logout">Logout</a></li>
                         </ul>
                     </div>
-                    <div v-if="!name">
+                    <div v-if="!account">
                         <a href="http://localhost:8081/oauth2/authorization/google" class="btn" role="button">로그인</a>
                     </div>
                 </li>
@@ -29,7 +29,7 @@
 
 <script>
     export default {
-        props: ['name', 'email', 'image'],
+        props: ['account'],
         methods: {
 
         }

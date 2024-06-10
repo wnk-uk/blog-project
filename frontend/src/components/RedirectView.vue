@@ -10,7 +10,7 @@
     import router from '../router';
 
     export default {
-        emits: ['setToken', 'loadAccount', 'findTags', 'addTag'],
+        emits: ['setToken', 'loadAccount', 'fetchTag', 'addNewTag'],
         setup(props, { emit }) {
             const route = useRoute();
             const token = route.query.token;
@@ -20,8 +20,7 @@
                 emit('setToken', token);
             } else {
                 sessionStorage.removeItem("jwt-token");
-                emit('setToken', null);
-                
+                emit('clearToken');
             }
             emit('loadAccount');
 

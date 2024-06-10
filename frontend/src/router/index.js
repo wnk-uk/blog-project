@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import RedirectView from '../components/RedirectView.vue'
-import MainSection from '../components/MainSection.vue'
+import MainLayout from '../components/MainLayout.vue'
 import TagList from '../views/TagList.vue'
+import TagSection from '@/components/TagSection.vue';
 
 const routes = [
     { 
@@ -14,12 +15,25 @@ const routes = [
     },
     {
         path: '/',
-        component : MainSection
-        ,props:true
+        component : MainLayout,
+        props:true,
+        children : [
+            {
+                path: '/',
+                component:TagSection
+            }
+        ]
     },
      {
          path: '/tags/:id',
-         component : TagList
+         component : TagList,
+         children : [
+            {
+                path: '/tags/:id',
+                component:TagSection
+            }
+        ]
+
      }
 ]
 

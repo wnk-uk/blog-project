@@ -2,7 +2,10 @@ import { createStore } from 'vuex';
 
 export default createStore({
   state: {
-    token: null // 토큰 상태
+    token: null, // 토큰 상태
+    tags: [],
+    tagsMessage: null,
+    tagsIsSuccess : false
   },
 
   //vuex의 상태를 변경하는 유일한 방법
@@ -14,6 +17,15 @@ export default createStore({
     },
     clearToken(state) {
       state.token = null;
+    },
+    setTags(state, tags) {
+      state.tags = tags;
+    },
+    setTagsMessage(state, message) {
+      state.tagsMessage = message;
+    },
+    setTagsIsSuccess(state, flag) {
+      state.tagsIsSuccess = flag;
     }
   },
 
@@ -26,9 +38,21 @@ export default createStore({
     },
     clearToken({ commit }) {
       commit('clearToken');
+    },
+    setTags({ commit }, tags) {
+      commit('setTags', tags);
+    },
+    setTagsMessage({ commit }, message) {
+      commit('setTagsMessage', message);
+    },
+    setTagsIsSuccess({ commit }, flag) {
+      commit('setTagsIsSuccess', flag);
     }
   },
   getters: {
-    getToken: state => state.token
+    getToken: state => state.token,
+    getTags: state => state.tags,
+    getTagsMessage: state => state.tagsMessage,
+    getTagsIsSuccess: state => state.tagsIsSuccess
   }
 });
