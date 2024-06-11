@@ -4,6 +4,7 @@ export default createStore({
   state: {
     token: null, // 토큰 상태
     tags: [],
+    account : null,
     tagsMessage: null,
     tagsIsSuccess : false
   },
@@ -26,6 +27,9 @@ export default createStore({
     },
     setTagsIsSuccess(state, flag) {
       state.tagsIsSuccess = flag;
+    },
+    setAccount(state, account) {
+      state.account = account;
     }
   },
 
@@ -47,12 +51,16 @@ export default createStore({
     },
     setTagsIsSuccess({ commit }, flag) {
       commit('setTagsIsSuccess', flag);
+    },
+    setAccount({commit}, account) {
+      commit('setAccount', account);
     }
   },
   getters: {
     getToken: state => state.token,
     getTags: state => state.tags,
     getTagsMessage: state => state.tagsMessage,
-    getTagsIsSuccess: state => state.tagsIsSuccess
+    getTagsIsSuccess: state => state.tagsIsSuccess,
+    getAccount: state => state.account
   }
 });

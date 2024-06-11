@@ -7,6 +7,8 @@ import com.blog.api.domain.tag.form.TagForm;
 import com.blog.api.repository.tag.TagRepository;
 import com.blog.api.service.tag.TagService;
 import com.blog.api.domain.tag.validator.TagValidator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,7 @@ public class BlogController {
     private final TagValidator tagValidator;
     private final TagRepository tagRepository;
     private final TagService tagService;
+    private final ObjectMapper objectMapper;
 
     @InitBinder("tagForm")
     public void tagBinder(WebDataBinder webDataBinder) {
@@ -45,10 +48,12 @@ public class BlogController {
     }
 
     @GetMapping("/tags")
-    public ResponseEntity getTagList() {
+    public ResponseEntity getTagList() throws JsonProcessingException {
+
         List<Tag> allTags = tagRepository.findAll().stream()
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(allTags);
+
+        return ResponseEntity.ok(objectMapper.writeValueAsString(allTags));
     }
 
 

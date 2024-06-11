@@ -14,8 +14,8 @@
         setup(props, { emit }) {
             const route = useRoute();
             const token = route.query.token;
-            
-            if (token) {
+            console.log(token);
+            if (token != null) {
                 sessionStorage.setItem("jwt-token", token);
                 emit('setToken', token);
             } else {

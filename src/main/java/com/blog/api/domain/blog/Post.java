@@ -3,6 +3,8 @@ package com.blog.api.domain.blog;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -17,7 +19,8 @@ public class Post {
 
     private String title;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tag_id")
     private Tag tag;
 
     @Column(length = 1000)
@@ -29,6 +32,17 @@ public class Post {
     @Lob @Basic(fetch = FetchType.EAGER)
     private String content;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PostStatus status;
+
+    private LocalDateTime createAt;
+
+    private LocalDateTime postAt;
+
+    public String getPostStatus() {
+        return this.status.getKey();
+    }
 
 }
 

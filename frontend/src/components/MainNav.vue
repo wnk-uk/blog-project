@@ -5,19 +5,20 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link" aria-current="page" href="#">search</a></li>
+                <li class="nav-item fs-25"><font-awesome-icon :icon="['fas', 'magnifying-glass']" /></li>
+                <li class="nav-item fs-25" v-if="state.account && state.account.role === 'ADMIN'" @click="goWriteView"><font-awesome-icon :icon="['fas', 'pen']" /></li>
                 <li class="nav-item">
-                    <div v-if="account" class="dropdown"> <!-- v-if -->
+                    <div v-if="state.account" class="dropdown"> <!-- v-if -->
                         <button class="btn btn-secondary dropdown-toggle profile" 
                                 type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-                                :style="{ backgroundImage : 'url(' + account.picture + ')' }" >
+                                :style="{ backgroundImage : 'url(' + state.account.picture + ')' }" >
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="http://localhost:8081/logout">Logout</a></li>
+                            <li><a class="dropdown-item" @click="logout">Logout</a></li>
                         </ul>
                     </div>
-                    <div v-if="!account">
+                    <div v-if="!state.account">
                         <a href="http://localhost:8081/oauth2/authorization/google" class="btn" role="button">로그인</a>
                     </div>
                 </li>
@@ -28,11 +29,45 @@
 </template>
 
 <script>
-    export default {
-        props: ['account'],
-        methods: {
+    import { onMounted, reactive, watch } from 'vue';
+    import { useStore } from 'vuex';
+    import AuthService from '../services/AuthService';
+    import router from '../router';
 
+    export default {
+        setup() {
+            
+            const store = useStore();
+            const state = reactive({
+                account: null,
+                error: null
+            });
+
+            onMounted(async () => {
+                try {
+                    state.account = store.state.account;
+                } catch (error) {
+                    state.error = error.message;
+                }
+            });
+
+            watch(() => store.state.account, (newValue) => {
+                state.account = newValue;
+            });
+
+            const logout = () => {
+                AuthService.removeToken();
+                window.location.href = "http://localhost:8081/logout";
+            }
+
+            const goWriteView = () => {
+                router.push({path: '/write'});
+            }
+
+            return { state, logout, goWriteView }
         }
+        
+
     }
 </script>
 
@@ -52,5 +87,9 @@
     .nav-item {
         display: flex;
         align-items: center;
+        margin-left:15px;
+    }
+    .fs-25 {
+        font-size: 25px;
     }
 </style>

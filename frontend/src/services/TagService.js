@@ -3,7 +3,12 @@ import axios from './axios';
 class TagService {
     async fetchTags() {
         try {
-            const response = await axios.get("/api/tags");
+            const response = await axios.get("/api/tags",{
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            //localStorage.setItem('tags', JSON.stringify(response.data));
             return response.data;
         } catch (error) {
             throw new Error('Failed to fetch tags');

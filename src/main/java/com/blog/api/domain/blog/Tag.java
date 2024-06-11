@@ -1,6 +1,7 @@
 package com.blog.api.domain.blog;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Tag {
 
     @GeneratedValue
@@ -23,8 +25,13 @@ public class Tag {
     @Column(unique = true, nullable = false)
     private String tagName;
 
-    @OneToMany
+    @OneToMany(mappedBy = "tag")
+    @JsonIgnore // Post 엔티티의 tag 필드를 무시
     private List<Post> posts;
 
 
+    public void addPost(Post post) {
+        posts.add(post);
+        post.setTag(this);
+    }
 }

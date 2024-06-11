@@ -2,6 +2,7 @@
   <div class="container">
     <div class="row">
       <TagSection @fetchTags="$emit('fetchTags')" @addNewTag="handlerNewTag" @setTagsIsSuccess="setTagsIsSuccess"></TagSection>    
+
       <div class="col-lg-9">
         <div class="card mb-4">
           <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
@@ -40,23 +41,22 @@
 
 <script>
 import { useRoute } from 'vue-router';
-import router from '../router';
 import { onMounted } from 'vue';
 import TagSection from '../components/TagSection.vue';
+import PostService from '../services/PostService';
 
 export default {
-  setup(props, { emit }) {
+  setup() {
     const route = useRoute();
     const id = route.params.id;
 
+    const posts = null;
 
-    console.log(router);
-    console.log(emit);
-
-    onMounted(() => {
-      console.log(id);
+    onMounted(async () => {
+      const response = await PostService.fetchPosts(id);
+      this.posts = response;
     });
-
+      return { posts }
   },
   components: {
     TagSection

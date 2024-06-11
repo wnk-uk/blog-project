@@ -1,6 +1,7 @@
 package com.blog.api.exception;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class GlobalExceptionHandler {
 }
 
     @Setter
+    @Getter
     @AllArgsConstructor
     class ErrorResponse {
         private String message;

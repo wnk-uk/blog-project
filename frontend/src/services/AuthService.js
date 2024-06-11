@@ -5,11 +5,11 @@ class AuthService {
     }
   
     saveToken(token) {
-        sessionStorage.setItem('token', token);
+        sessionStorage.setItem('jwt-token', token);
     }
   
     removeToken() {
-        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('jwt-token');
     }
   }
   

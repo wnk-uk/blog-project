@@ -12,27 +12,24 @@ import TagService from './services/TagService';
 import AccountService from './services/AccountService';
 
 export default {
-  data() {
-    return {
-        account : null,
-    }
-  },
   components: {
     MainNav,
     MainFooter,
   },
   methods : {
-    ...mapActions(['setToken', 'clearToken', 'setTags', 'setTagsMessage', 'setTagsIsSuccess']),
+    ...mapActions(['setToken', 'clearToken', 'setTags', 'setTagsMessage', 'setTagsIsSuccess', 'setAccount']),
     async loadAccount() {
       try {
-        this.account = await AccountService.loadAccount();
+        this.setAccount(await AccountService.loadAccount());
       } catch(error) {
-        this.account = null;
+        this.setAccount(null);
       }
     },
     async fetchTags() {
       try {
-        this.setTags(await TagService.fetchTags());
+        const tags = await TagService.fetchTags();
+        this.setTags(tags);
+        console.log(tags);
       } catch (error) {
         console.log(error);
       }
@@ -50,6 +47,7 @@ export default {
   },
   created() {
     this.setToken(sessionStorage.getItem("jwt-token"));
+    this.fetchTags();
     this.loadAccount();
   }
 }

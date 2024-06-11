@@ -4,7 +4,7 @@
             <div
                 style="display:flex; align-items: center; justify-content:space-between; border-bottom: 1px solid lightgray;">
                 <div style="display:flex; align-items:center; height: 36px;;">태그 목록</div>
-                <button v-if="state.role === 'ADMIN'" type="button" style="background-color: white; border:0px;"
+                <button v-if="state.account && state.account.role === 'ADMIN'" type="button" style="background-color: white; border:0px;"
                     class="btn btn-light" data-bs-toggle="modal" data-bs-target="#tagModal">+</button>
             </div>
         </div>
@@ -45,30 +45,25 @@
 </template>
 
 <script>
-import AccountService from '../services/AccountService';
 import { onMounted, reactive, watchEffect, watch  } from 'vue';
 import { useStore } from 'vuex';
 
     export default {
-        emits: ['setToken', 'loadAccount', 'fetchTags', 'addNewTag'],
-        props:['tags', 'message', 'successFlag'],
+        emits: ['fetchTags', 'addNewTag', 'setTagsIsSuccess'],
         setup(props, { emit }) {
             const store = useStore();
 
             onMounted(async () => {
-                console.log(store.state);
               emit('fetchTags');
               try {
-                const response = await AccountService.loadAccount();
-                state.role = response.role;
+                state.account = store.state.account;
               } catch (error) {
                 state.error = error.message;
               }
             });
 
             const state = reactive({
-                role: null,
-                error: null,
+                account: null,
                 message: null,
                 tags: []
             });
@@ -89,6 +84,10 @@ import { useStore } from 'vuex';
 
             watch(() => store.state.tags, (newValue) => {
                 state.tags = newValue;
+            });
+
+            watch(() => store.state.account, (newValue) => {
+                state.account = newValue;
             });
 
             watchEffect(() => {

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import RedirectView from '../components/RedirectView.vue'
 import MainLayout from '../components/MainLayout.vue'
 import TagList from '../views/TagList.vue'
-import TagSection from '@/components/TagSection.vue';
+import writeLayout from '../views/WriteLayout.vue'
 
 const routes = [
     { 
@@ -16,25 +16,16 @@ const routes = [
     {
         path: '/',
         component : MainLayout,
-        props:true,
-        children : [
-            {
-                path: '/',
-                component:TagSection
-            }
-        ]
+        props:true
     },
-     {
-         path: '/tags/:id',
-         component : TagList,
-         children : [
-            {
-                path: '/tags/:id',
-                component:TagSection
-            }
-        ]
-
-     }
+    {
+        path: '/tags/:id',
+        component : TagList,
+    },
+    {
+        path: '/write',
+        component : writeLayout,
+    }
 ]
 
 const router = createRouter({
