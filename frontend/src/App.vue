@@ -29,7 +29,6 @@ export default {
       try {
         const tags = await TagService.fetchTags();
         this.setTags(tags);
-        console.log(tags);
       } catch (error) {
         console.log(error);
       }

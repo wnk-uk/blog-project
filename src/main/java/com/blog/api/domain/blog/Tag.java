@@ -8,6 +8,11 @@ import lombok.*;
 import java.util.HashSet;
 import java.util.List;
 
+
+
+@NamedEntityGraph(name="Tag.withPosts", attributeNodes  = {
+        @NamedAttributeNode("posts")
+})
 @Entity
 @Getter
 @Setter
@@ -26,7 +31,6 @@ public class Tag {
     private String tagName;
 
     @OneToMany(mappedBy = "tag")
-    @JsonIgnore // Post 엔티티의 tag 필드를 무시
     private List<Post> posts;
 
 

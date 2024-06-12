@@ -3,6 +3,7 @@ package com.blog.api.controller.blog;
 import com.blog.api.anotation.CurrentAccount;
 import com.blog.api.domain.account.Account;
 import com.blog.api.domain.blog.Post;
+import com.blog.api.domain.blog.Tag;
 import com.blog.api.domain.blog.form.PostForm;
 import com.blog.api.domain.blog.validator.PostValidator;
 import com.blog.api.service.post.PostService;
@@ -44,10 +45,10 @@ public class PostController {
     }
 
     @GetMapping("/tags/{id}/posts")
-    public ResponseEntity getPostList(@PathVariable Long id) {
-        //List<Post> tagPosts = tagService.findBy();
-
-        return ResponseEntity.ok().build();
+    public ResponseEntity getPostList(@PathVariable(name = "id") Long id) {
+        System.out.println("id :" + id);
+        Tag tag = tagService.getPostList(id);
+        return ResponseEntity.ok(tag);
     }
 
 }

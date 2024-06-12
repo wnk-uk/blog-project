@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import RedirectView from '../components/RedirectView.vue'
-import MainLayout from '../components/MainLayout.vue'
+import MainLayout from '../views/MainLayout.vue'
 import TagList from '../views/TagList.vue'
 import writeLayout from '../views/WriteLayout.vue'
 

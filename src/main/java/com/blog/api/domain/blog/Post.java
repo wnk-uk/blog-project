@@ -1,5 +1,6 @@
 package com.blog.api.domain.blog;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,7 +21,7 @@ public class Post {
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tag_id")
+    @JsonIgnore // Post 엔티티의 tag 필드를 무시
     private Tag tag;
 
     @Column(length = 1000)

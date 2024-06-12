@@ -13,7 +13,7 @@
                 <div class="col-sm-12">
                     <ul class="list-unstyled mb-0 mt-2">
                         <li v-for="tag in state.tags" :key="tag.id" class="link-wrapper">
-                            <a :href="'/tags/' + tag.id" class="link-btn">{{ tag.tagName }}</a>
+                            <a :href="'/tags/' + tag.id" class="link-btn" :id="'tag_' + tag.id">{{ tag.tagName }}</a>
                         </li>
                     </ul>
                 </div>
@@ -50,6 +50,7 @@ import { useStore } from 'vuex';
 
     export default {
         emits: ['fetchTags', 'addNewTag', 'setTagsIsSuccess'],
+        props : ['select'],
         setup(props, { emit }) {
             const store = useStore();
 
@@ -65,7 +66,7 @@ import { useStore } from 'vuex';
             const state = reactive({
                 account: null,
                 message: null,
-                tags: []
+                tags: [],
             });
 
             const submitForm = () => {
@@ -80,6 +81,10 @@ import { useStore } from 'vuex';
 
             watch(() => store.state.tagsMessage, (newValue) => {
                 state.message = newValue;
+            });
+
+            watch(() => props.select, (newValue) => {
+                document.querySelector('#tag_' + newValue).style.color="black";
             });
 
             watch(() => store.state.tags, (newValue) => {

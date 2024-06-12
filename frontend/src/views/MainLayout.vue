@@ -87,8 +87,8 @@
 </template>
 
 <script>
-import MainHeader from './MainHeader.vue';
-import TagSection from './TagSection.vue';
+import MainHeader from '../components/MainHeader.vue';
+import TagSection from '../components/TagSection.vue';
 
     export default {
         props: ['fetchTags', 'addNewTag'],
