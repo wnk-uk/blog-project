@@ -1,10 +1,14 @@
 <template>
-    <div ref="groundElRef"></div>
+    <div class="container">
+        <div ref="groundElRef"></div>
+    </div>
+    
 </template>
 
 <script>
 
-    import { Editor } from '@toast-ui/editor';
+    //import { Editor } from '@toast-ui/editor';
+    import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
     import { onMounted, ref, watch } from 'vue';
     import { useRoute } from 'vue-router';
 
@@ -17,9 +21,8 @@
             let editorInstance = null; // 에디터 인스턴스 저장 변수
 
             onMounted(() => {
-                editorInstance = new Editor({
+                editorInstance = new Viewer({
                     el: groundElRef.value,
-                    previewStyle: 'vertical',
                     height: '700px'
                 });
 

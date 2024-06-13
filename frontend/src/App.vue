@@ -1,7 +1,7 @@
 <template>
-  <MainNav :account="account"></MainNav>
-  <RouterView @setToken="setToken" @fetchTags="fetchTags" @addNewTag="addNewTag" ></RouterView>
-  <MainFooter></MainFooter>
+    <MainNav :account="account"></MainNav>
+    <RouterView @setToken="setToken" @fetchTags="fetchTags" @addNewTag="addNewTag" ></RouterView>
+    <MainFooter></MainFooter>
 </template>
 
 <script>
@@ -65,4 +65,5 @@ export default {
 * {
   font-family: 'KCC-Hanbit', sans-serif;
 }
+
 </style>
