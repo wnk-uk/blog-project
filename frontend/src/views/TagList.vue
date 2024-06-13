@@ -3,7 +3,7 @@
     <div class="row">
       <TagSection @fetchTags="$emit('fetchTags')" @addNewTag="handlerNewTag" @setTagsIsSuccess="setTagsIsSuccess" :select="tags.id"></TagSection>    
 
-      <div class="col-lg-9">
+      <div class="col-lg-9" @click="goView">
         <div class="card mb-4" v-for="post in posts.data" :key="post.id" @click="postView">
           <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
           <div class="card-body">
@@ -22,6 +22,8 @@ import { useRoute } from 'vue-router';
 import { onMounted, reactive } from 'vue';
 import TagSection from '../components/TagSection.vue';
 import PostService from '../services/PostService';
+import router from '../router';
+
 
 export default {
   setup(props, { emit }) {
@@ -44,12 +46,16 @@ export default {
       emit('setTagsIsSuccess', value);
     }
 
+    const goView = () => {
+      router.push({path: '/posts/view/' + id});
+    }
+
     onMounted(async () => {
       const response = await PostService.fetchPosts(id);
       tags.id = response.id;
       posts.data = response.posts;
     });
-      return { posts, tags, handlerNewTag, setTagsIsSuccess }
+      return { posts, tags, handlerNewTag, setTagsIsSuccess, goView }
   },
   components: {
     TagSection

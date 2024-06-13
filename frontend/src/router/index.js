@@ -3,6 +3,7 @@ import RedirectView from '../components/RedirectView.vue'
 import MainLayout from '../views/MainLayout.vue'
 import TagList from '../views/TagList.vue'
 import writeLayout from '../views/WriteLayout.vue'
+import viewsLayout from '../views/ViewLayout.vue'
 
 const routes = [
     { 
@@ -23,9 +24,13 @@ const routes = [
         component : TagList,
     },
     {
-        path: '/write',
+        path: '/posts/write',
         component : writeLayout,
-    }
+    },
+    {
+        path: '/posts/view/:id',
+        component : viewsLayout,
+    },
 ]
 
 const router = createRouter({

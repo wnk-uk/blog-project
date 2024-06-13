@@ -26,6 +26,19 @@ class PostService {
             throw new Error('Failed to fetch posts');
         } 
     }
+
+    async fetchPost(id) {
+        try {
+            const response = await axios.get("/api/posts/" + id, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error('Failed to fetch posts');
+        } 
+    }
 }
 
 export default new PostService();

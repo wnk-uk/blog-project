@@ -61,7 +61,7 @@
             }
 
             const goWriteView = () => {
-                router.push({path: '/write'});
+                router.push({path: '/posts/write'});
             }
 
             return { state, logout, goWriteView }
