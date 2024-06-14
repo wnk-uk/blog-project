@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -34,6 +35,10 @@ public class PostService {
                 .content(postForm.getContent()).build());
 
         tag.addPost(post);
+    }
+
+    public Post getPost(Long id) {
+        return postRepository.findById(id).orElseThrow(() -> new NoSuchElementException("post not found"));
     }
 
 }

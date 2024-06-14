@@ -1,6 +1,6 @@
 <template>
     <MainNav :account="account"></MainNav>
-    <RouterView @setToken="setToken" @fetchTags="fetchTags" @addNewTag="addNewTag" ></RouterView>
+    <RouterView @setToken="setToken" @fetchTags="fetchTags" @addNewTag="addNewTag" :post="post" @fetchPost="fetchPost"></RouterView>
     <MainFooter></MainFooter>
 </template>
 
@@ -10,11 +10,17 @@ import MainFooter from './components/MainFooter.vue';
 import { mapActions } from 'vuex';
 import TagService from './services/TagService';
 import AccountService from './services/AccountService';
+import PostService from './services/PostService';
 
 export default {
   components: {
     MainNav,
     MainFooter,
+  },
+  data() {
+    return {
+      post : null
+    }
   },
   methods : {
     ...mapActions(['setToken', 'clearToken', 'setTags', 'setTagsMessage', 'setTagsIsSuccess', 'setAccount']),
@@ -41,6 +47,13 @@ export default {
           } catch (error) {
             this.setTagsMessage(error.message);
             this.setTagsIsSuccess(false);
+        }
+    },
+    async fetchPost(id) {
+        try {
+          this.post = await PostService.fetchPost(id);  
+        } catch(error) {
+          console.log(error);
         }
     }
   },

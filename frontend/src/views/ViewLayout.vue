@@ -14,7 +14,7 @@
 
     export default {
         props: ['post'],
-        setup(props) {
+        setup(props, { emit }) {
             const route = useRoute();
             const id = route.params.id;
             const groundElRef = ref(null);
@@ -26,14 +26,18 @@
                     height: '700px'
                 });
 
-                editorInstance.setMarkdown('# test');
+                fetchPost();
             });
+
+            const fetchPost = () => {
+                emit('fetchPost', id);
+            }
 
             watch(() => props.post, (post) => {
                 editorInstance.setMarkdown(post.content);
             });
 
-            return { groundElRef, editorInstance, id }
+            return { groundElRef, editorInstance, id, fetchPost }
         }   
     }
 </script>

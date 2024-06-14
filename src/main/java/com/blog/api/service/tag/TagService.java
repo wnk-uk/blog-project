@@ -2,6 +2,7 @@ package com.blog.api.service.tag;
 
 import com.blog.api.domain.blog.Post;
 import com.blog.api.domain.blog.Tag;
+import com.blog.api.repository.post.PostRepository;
 import com.blog.api.repository.tag.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.NoSuchElementException;
 public class TagService {
 
     private final TagRepository tagRepository;
+    private final PostRepository postRepository;
 
     public void createTag(String tagName) {
         Tag tag = tagRepository.findByTagName(tagName);
