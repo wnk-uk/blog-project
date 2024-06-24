@@ -35,7 +35,9 @@ public class PostService {
 
     private final FileRepository fileRepository;
 
+    //TODO S3 사용 여부 고려해서 나중에 리펙터링
     private String uploadFileDir = "C:/blog-image";
+
 
 
     public void createPost(PostForm postForm) {
