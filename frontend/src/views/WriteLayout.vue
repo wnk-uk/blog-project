@@ -15,7 +15,7 @@
                 <button class="btn" style="padding-left:0px;" >뒤로가기</button>
             </div>
             <div>
-                <button class="btn" >임시저장</button>
+                <button class="btn" @click="tempsave">임시저장</button>
                 <button class="btn" @click="save">포스팅</button>
             </div>
         </div>
@@ -25,7 +25,7 @@
 <script>
     import { Editor } from '@toast-ui/editor';
     import { useStore } from 'vuex';
-    import { onMounted, ref } from 'vue';
+    import { onMounted, ref, watch } from 'vue';
     import router from '../router';
     import PostService from '../services/PostService';
 
@@ -43,7 +43,19 @@
                 editorInstance = new Editor({
                     el: groundElRef.value,
                     previewStyle: 'vertical',
-                    height: '700px'
+                    height: '700px',
+                    hooks : {
+                        async addImageBlobHook(blob, callback) {
+                            const fomrData = new FormData();
+                            fomrData.append('image', blob);    
+                            
+                            const response = await PostService.uploadInline(fomrData);
+                            const imageUrl = 'http://localhost:8081' + '/posts/inlines/' + response.id;
+                            
+                            callback(imageUrl);
+                            
+                        }
+                    }
                 });
             });
 
@@ -57,12 +69,21 @@
                 await PostService.addNewPost(post);
                 router.push({path:'/tags/' + post.tag})
             }
+
+            watch(() => store.state.tags, (newValue) => {
+                tags.value = newValue;
+            });
             
             const back = () => {
                 history.back();
             }
+            
+            const tempsave = async () => {
+                console.log(editorInstance);
+                console.log(editorInstance.getMarkdown());
+            }
 
-            return { groundElRef, editorInstance, save, back, tags }
+            return { groundElRef, editorInstance, save, back, tags, tempsave }
         }
     }
 </script>

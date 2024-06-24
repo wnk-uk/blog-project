@@ -31,6 +31,7 @@ public class Tag {
     private String tagName;
 
     @OneToMany(mappedBy = "tag")
+    @OrderBy("postAt desc")
     private List<Post> posts;
 
 

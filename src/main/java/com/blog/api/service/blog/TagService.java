@@ -1,15 +1,17 @@
-package com.blog.api.service.tag;
+package com.blog.api.service.blog;
 
 import com.blog.api.domain.blog.Post;
 import com.blog.api.domain.blog.Tag;
-import com.blog.api.repository.post.PostRepository;
-import com.blog.api.repository.tag.TagRepository;
+import com.blog.api.repository.blog.PostRepository;
+import com.blog.api.repository.blog.TagRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +32,9 @@ public class TagService {
 
     public Tag getPostList(Long id) {
         return tagRepository.findTagWithPostsById(id).orElseThrow(() -> new NoSuchElementException("Tag not found"));
+    }
+
+    public List<Post> getPostAll() {
+        return postRepository.findAll(Sort.by(Sort.Order.desc("postAt"))).stream().collect(Collectors.toList());
     }
 }

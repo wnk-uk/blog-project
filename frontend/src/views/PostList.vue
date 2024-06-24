@@ -3,8 +3,8 @@
     <div class="row">
       <TagSection @fetchTags="$emit('fetchTags')" @addNewTag="handlerNewTag" @setTagsIsSuccess="setTagsIsSuccess" :select="tags.id"></TagSection>    
 
-      <div class="col-lg-9" @click="goView">
-        <div class="card mb-4" v-for="post in posts.data" :key="post.id" @click="postView">
+      <div class="col-lg-9">
+        <div class="card mb-4" v-for="post in posts.data" :key="post.id" @click="goView(post.id)">
           <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
           <div class="card-body">
             <div class="small text-muted">January 1, 2023  {{ post.postAt }}</div>
@@ -42,12 +42,12 @@ export default {
       emit('addNewTag', value);
     }
 
-    const setTagsIsSuccess = (value) => {
-      emit('setTagsIsSuccess', value);
+    const setTagsIsSuccess = (flag) => {
+      emit('setTagsIsSuccess', flag);
     }
 
-    const goView = () => {
-      router.push({path: '/posts/view/' + id});
+    const goView = (pid) => {
+      router.push({path: '/posts/view/' + pid});
     }
 
     onMounted(async () => {
@@ -55,6 +55,7 @@ export default {
       tags.id = response.id;
       posts.data = response.posts;
     });
+    
       return { posts, tags, handlerNewTag, setTagsIsSuccess, goView }
   },
   components: {

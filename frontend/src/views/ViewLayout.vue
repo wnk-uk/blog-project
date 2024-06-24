@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="profile-wrapper col-lg-12">
                         <div>
-                            <div>{{ post.title }}</div>
+                            <div v-if="post != null">{{ post.title }}</div>
                         </div>
                     </div>
                 </div>

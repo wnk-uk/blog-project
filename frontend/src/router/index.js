@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import RedirectView from '../components/RedirectView.vue'
 import MainLayout from '../views/MainLayout.vue'
-import TagList from '../views/TagList.vue'
+import PostList from '../views/PostList.vue'
 import writeLayout from '../views/WriteLayout.vue'
 import viewsLayout from '../views/ViewLayout.vue'
 
@@ -21,7 +21,7 @@ const routes = [
     },
     {
         path: '/tags/:id',
-        component : TagList,
+        component : PostList,
     },
     {
         path: '/posts/write',

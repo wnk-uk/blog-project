@@ -1,4 +1,4 @@
-package com.blog.api.repository.tag;
+package com.blog.api.repository.blog;
 
 import com.blog.api.domain.blog.Tag;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -12,5 +12,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
     @EntityGraph(value="Tag.withPosts", type = EntityGraph.EntityGraphType.FETCH)
     Optional<Tag> findTagWithPostsById(Long id);
+
+
 
 }
