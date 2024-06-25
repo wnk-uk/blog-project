@@ -50,8 +50,8 @@
                             fomrData.append('image', blob);    
                             
                             const response = await PostService.uploadInline(fomrData);
-                            const imageUrl = 'http://localhost:8081' + '/posts/inlines/' + response.id;
-                            
+                            const imageUrl = 'http://localhost:8081' + '/api/posts/inlines/' + response.id;
+                            console.log(callback);
                             callback(imageUrl);
                             
                         }

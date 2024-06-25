@@ -3,8 +3,12 @@ package com.blog.api.domain.blog;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 import lombok.*;
+import org.springframework.util.FileCopyUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Entity
@@ -28,5 +32,11 @@ public class PostFile {
     private String ext;
     private String contentType;
 
+    @Transient
+    private byte[] binary;
 
+
+    public void imageLoad(String url) throws IOException {
+        binary = FileCopyUtils.copyToByteArray(new File(url));
+    }
 }

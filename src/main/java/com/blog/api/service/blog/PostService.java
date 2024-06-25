@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -99,5 +100,12 @@ public class PostService {
         String randomNumber = Integer.toString(random.nextInt(Integer.MAX_VALUE));
         String timeStamp = dateFormat.format(new Date());
         return timeStamp + randomNumber + originalFilename;
+    }
+
+    public PostFile loadToFile(Long id) throws IOException {
+        PostFile postFile = fileRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Not Find File"));
+        String fileUrl = uploadFileDir + File.separator + postFile.getFileName();
+        postFile.imageLoad(fileUrl);
+        return postFile;
     }
 }

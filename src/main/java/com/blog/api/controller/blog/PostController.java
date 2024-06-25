@@ -11,6 +11,7 @@ import com.blog.api.service.blog.PostService;
 import com.blog.api.service.blog.TagService;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 @RestController
@@ -71,8 +74,13 @@ public class PostController {
     }
 
     @GetMapping("/posts/inlines/{id}")
-    public ResponseEntity loadInline(@PathVariable(name = "id") Long id) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity loadInline(@PathVariable(name = "id") Long id) throws IOException {
+        PostFile postFile = postService.loadToFile(id);
+
+        HttpHeaders header = new HttpHeaders();
+        header.add("Content-type", postFile.getContentType());
+
+        return ResponseEntity.ok().headers(header).body(postFile.getBinary());
     }
 
 }
