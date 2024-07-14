@@ -10,9 +10,9 @@
                     <div class="card mb-4" v-for="post in posts.data" :key="post.id" @click="goView(post.id)">
                         <a href="#!"><img class="card-img-top" style="height:400px;" :src="post.thumbnail" alt="..." /></a>
                     <div class="card-body">
-                        <div class="small text-muted">January 1, 2023  {{ post.postAt }}</div>
+                        <div class="small text-muted">{{ formatDateTime(post.postAt) }}</div>
                         <h2 class="card-title">{{ post.title }}</h2>
-                        <p class="card-text">{{ post.content }}</p>
+                        <p class="card-text">{{ post.description }}</p>
                     </div>
                     </div>
                 </div>
@@ -30,6 +30,7 @@ import TagSection from '../components/TagSection.vue';
 import { onMounted, reactive } from 'vue';
 import PostService from '../services/PostService';
 import router from '../router';
+import dayjs from 'dayjs';
 
     export default {
         props: ['fetchTags', 'addNewTag'],
@@ -38,6 +39,7 @@ import router from '../router';
             MainHeader
         },
         setup(props, { emit }) {
+
             const handlerNewTag = (value) => {
                 emit('addNewTag', value);
             }
@@ -56,11 +58,14 @@ import router from '../router';
 
             onMounted(async () => {
                 const response = await PostService.fetchAll();
-                console.log(response);
                 posts.data = response;
             });
 
-            return {handlerNewTag, setTagsIsSuccess, posts, goView};
+            const formatDateTime = (datetime) => {
+                return dayjs(datetime).format('YYYY년 MM월 DD일 HH:mm');
+            };
+
+            return {handlerNewTag, setTagsIsSuccess, posts, goView, formatDateTime};
         }
         
     }
