@@ -9,5 +9,7 @@ public class PostForm {
     private String content;
     private String postStatus;
     private Long tag;
+    private String description;
+    private String thumbnail;
 
 }

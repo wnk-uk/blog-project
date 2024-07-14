@@ -18,19 +18,20 @@ public class Post {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false)
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore // Post 엔티티의 tag 필드를 무시
     private Tag tag;
 
-    @Column(length = 1000)
+    @Column(length = 100)
     private String description;
 
-    @Lob @Basic(fetch = FetchType.EAGER)
+    @Basic(fetch = FetchType.EAGER)
     private String thumbnail;
 
-    @Lob @Basic(fetch = FetchType.EAGER)
+    @Lob @Basic(fetch = FetchType.LAZY)
     private String content;
 
     @Enumerated(EnumType.STRING)

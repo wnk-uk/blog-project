@@ -51,7 +51,10 @@ public class PostService {
                 .postAt(LocalDateTime.now())
                 .createAt(LocalDateTime.now())
                 .status(PostStatus.fromKey(postForm.getPostStatus()))
-                .content(postForm.getContent()).build());
+                .content(postForm.getContent())
+                .description(postForm.getDescription())
+                .thumbnail(postForm.getThumbnail())
+                .build());
 
         tag.addPost(post);
     }

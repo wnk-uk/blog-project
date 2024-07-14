@@ -47,13 +47,11 @@
                     hooks : {
                         async addImageBlobHook(blob, callback) {
                             const fomrData = new FormData();
-                            fomrData.append('image', blob);    
+                            fomrData.append('image', blob);
                             
                             const response = await PostService.uploadInline(fomrData);
                             const imageUrl = 'http://localhost:8081' + '/api/posts/inlines/' + response.id;
-                            console.log(callback);
                             callback(imageUrl);
-                            
                         }
                     }
                 });
@@ -64,7 +62,9 @@
                     title : document.querySelector('#title').value,
                     tag : document.querySelector('#tags').value,
                     content : editorInstance.getMarkdown(),
-                    postStatus : 'P'
+                    postStatus : 'P',
+                    description : getDescription(),
+                    thumbnail : getThumbnail()
                 }
                 await PostService.addNewPost(post);
                 router.push({path:'/tags/' + post.tag})
@@ -79,11 +79,25 @@
             }
             
             const tempsave = async () => {
-                console.log(editorInstance);
-                console.log(editorInstance.getMarkdown());
+                
             }
 
-            return { groundElRef, editorInstance, save, back, tags, tempsave }
+            const getDescription = () => {
+                let editorHtml = editorInstance.getHTML();
+                const dom = document.createElement('div');
+                dom.innerHTML = editorHtml;
+                return dom.innerText.substring(0, 50);
+            }
+
+            const getThumbnail = () => {
+                let editorHtml = editorInstance.getHTML();
+                const dom = document.createElement('div');
+                dom.innerHTML = editorHtml;
+                return dom.querySelectorAll('img')[0].src;
+            }
+
+
+            return { groundElRef, editorInstance, save, back, tags, tempsave, getDescription, getThumbnail }
         }
     }
 </script>
