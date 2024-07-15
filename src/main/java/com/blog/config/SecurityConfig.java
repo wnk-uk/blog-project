@@ -26,7 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    @Value("${spring.front.url}")
+    @Value("${front.url}")
     private String FRONT_URL;
 
     private static String LOGOUT_URL = "/oauth2/logout";

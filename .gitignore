@@ -38,6 +38,7 @@ out/
 
 ### properties ###
 *-oauth.properties
+application.yml
 
 ## NPM ##
 src/main/resources/static/node_modules

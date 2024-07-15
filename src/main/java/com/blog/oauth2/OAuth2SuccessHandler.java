@@ -19,7 +19,7 @@ import java.io.IOException;
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     //TODO 나중에 설정값으로 변경
-    @Value("${spring.front.url}")
+    @Value("${front.url}")
     private String FRONT_URL;
     private static final String REDIRECT_URL = "/oauth2/redirect";
     private final JwtTokenProvider jwtTokenProvider;
