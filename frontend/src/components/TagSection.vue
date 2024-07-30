@@ -46,17 +46,20 @@
 
 <script>
 import { onMounted, reactive, watch  } from 'vue';
-import { useStore, mapActions } from 'vuex';
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 import TagService from '../services/TagService';
 
     export default {
-        ...mapActions(['setTags']),
-        props : ['select'],
-        setup(props) {
+        setup() {
             const store = useStore();
 
+            const route = useRoute();
+            const id = route.params.id;
+
             onMounted(async () => {
-              fetchTags();
+              await fetchTags();
+              if (id) document.querySelector('#tag_' + id).style.color = 'black';
               try {
                 state.account = store.state.account;
               } catch (error) {
@@ -84,18 +87,11 @@ import TagService from '../services/TagService';
                 try {
                     const tags = await TagService.fetchTags();
                     state.tags = tags;
+                    store.state.tags = tags;
                 } catch (error) {
-                    state.message = error;
+                    console.log(error);
                 }
             }
-
-            watch(() => props.select, (newValue) => {
-                document.querySelector('#tag_' + newValue).style.color = "black";
-            });
-
-            watch(() => state.tags, (newValue) => {
-                state.tags = newValue;
-            });
 
             watch(() => state.message, (newValue) => {
                 if (newValue == null) {
@@ -115,8 +111,8 @@ import TagService from '../services/TagService';
 
 <style scoped>
     .link-btn {
-    color: inherit;
-    text-decoration: none;
+        color: inherit;
+        text-decoration: none;
     }
 
     .link-wrapper {

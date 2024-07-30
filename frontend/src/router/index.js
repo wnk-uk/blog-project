@@ -4,6 +4,7 @@ import MainLayout from '../views/MainLayout.vue'
 import PostList from '../views/PostList.vue'
 import writeLayout from '../views/WriteLayout.vue'
 import viewsLayout from '../views/ViewLayout.vue'
+import PostTempList from '../views/PostTempList.vue';
 
 const routes = [
     { 
@@ -26,6 +27,10 @@ const routes = [
     {
         path: '/posts/write',
         component : writeLayout,
+    },
+    {
+        path: '/posts/temp',
+        component : PostTempList,
     },
     {
         path: '/posts/view/:id',

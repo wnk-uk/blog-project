@@ -27,6 +27,19 @@ class PostService {
         } 
     }
 
+    async fetchPostsTemp() {
+        try {
+            const response = await axios.get("/api/posts/temp", {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error('Failed to fetch posts');
+        } 
+    }
+
     async fetchAll() {
         try {
             const response = await axios.get("/api/posts", {

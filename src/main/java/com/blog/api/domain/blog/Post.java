@@ -23,6 +23,7 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore // Post 엔티티의 tag 필드를 무시
+    @JoinColumn(name = "tag_id")
     private Tag tag;
 
     @Column(length = 100)
@@ -44,6 +45,10 @@ public class Post {
 
     public String getPostStatus() {
         return this.status.getKey();
+    }
+
+    public void posting() {
+        this.status = PostStatus.POSTING;
     }
 
 }

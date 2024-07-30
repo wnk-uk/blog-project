@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <div class="row">
-      <TagSection :select="tags.id"></TagSection>    
+      <TagSection></TagSection>
 
       <div class="col-lg-9">
         <div class="card mb-4" v-for="post in posts.data" :key="post.id" @click="goView(post.id)">
-          <a href="#!"><img class="card-img-top" style="height:400px;" :src="post.thumbnail" alt="..." /></a>
+          <a href="#!"><img v-if="post.thumbnail != ''" class="card-img-top" style="height:400px;" :src="post.thumbnail" alt="..." /></a>
           <div class="card-body">
             <div class="small text-muted">{{ formatDateTime(post.postAt) }}</div>
             <h2 class="card-title">{{ post.title }}</h2>
@@ -34,26 +34,21 @@ export default {
         data : [],
     });
 
-    const tags = reactive({
-        id : null
-    });
-
     const goView = (pid) => {
       router.push({path: '/posts/view/' + pid});
     }
 
     onMounted(async () => {
       const response = await PostService.fetchPosts(id);
-      tags.id = response.id;
-      posts.data = response.posts;
+      posts.data = response;
     });
 
     const formatDateTime = (datetime) => {
       return dayjs(datetime).format('YYYY년 MM월 DD일 HH:mm');
     };
     
-    return { posts, tags, goView, formatDateTime }
-    
+    return { posts, goView, formatDateTime }
+
   },
   components: {
     TagSection

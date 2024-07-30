@@ -14,7 +14,7 @@
                                 :style="{ backgroundImage : 'url(' + state.account.picture + ')' }" >
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" @click="goTemp">임시저장</a></li>
                             <li><a class="dropdown-item" @click="logout">Logout</a></li>
                         </ul>
                     </div>
@@ -60,11 +60,15 @@
                 window.location.href = "http://localhost:8081/logout";
             }
 
+            const goTemp = () => {
+                router.push({path: '/posts/temp'});
+            }
+
             const goWriteView = () => {
                 router.push({path: '/posts/write'});
             }
 
-            return { state, logout, goWriteView }
+            return { state, logout, goWriteView, goTemp }
         }
         
 

@@ -17,7 +17,7 @@ export default {
     MainFooter,
   },
   methods : {
-    ...mapActions(['setToken', 'clearToken', 'setTags', 'setAccount']),
+    ...mapActions(['setToken', 'clearToken', 'setAccount']),
     async loadAccount() {
       try {
         this.setAccount(await AccountService.loadAccount());

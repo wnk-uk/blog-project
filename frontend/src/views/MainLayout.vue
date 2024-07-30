@@ -7,7 +7,7 @@
                 <!-- Blog entries-->
                 <div class="col-lg-9">
                     <div class="card mb-4" v-for="post in posts.data" :key="post.id" @click="goView(post.id)">
-                        <a href="#!"><img class="card-img-top" style="height:400px;" :src="post.thumbnail" alt="..." /></a>
+                        <a href="#!"><img v-if="post.thumbnail != null" class="card-img-top" style="height:400px;" :src="post.thumbnail" alt="..." /></a>
                     <div class="card-body">
                         <div class="small text-muted">{{ formatDateTime(post.postAt) }}</div>
                         <h2 class="card-title">{{ post.title }}</h2>

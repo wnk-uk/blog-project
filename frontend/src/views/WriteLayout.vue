@@ -58,28 +58,26 @@
             });
 
             const save = async () => {
-                let post = {
-                    title : document.querySelector('#title').value,
-                    tag : document.querySelector('#tags').value,
-                    content : editorInstance.getMarkdown(),
-                    postStatus : 'P',
-                    description : getDescription(),
-                    thumbnail : getThumbnail()
-                }
+                let post = getBody('P');
                 await PostService.addNewPost(post);
                 router.push({path:'/tags/' + post.tag})
             }
 
-            watch(() => store.state.tags, (newValue) => {
-                tags.value = newValue;
-            });
-            
-            const back = () => {
-                history.back();
-            }
-            
             const tempsave = async () => {
-                
+                let post = getBody('T');
+                await PostService.addNewPost(post);
+                router.push({path:'/tags/' + post.tag})
+            }
+
+            const getBody = (status) => {
+                return {
+                    title : document.querySelector('#title').value,
+                    tag : document.querySelector('#tags').value,
+                    content : editorInstance.getMarkdown(),
+                    postStatus : status,
+                    description : getDescription(),
+                    thumbnail : getThumbnail()
+                }
             }
 
             const getDescription = () => {
@@ -93,11 +91,19 @@
                 let editorHtml = editorInstance.getHTML();
                 const dom = document.createElement('div');
                 dom.innerHTML = editorHtml;
-                return dom.querySelectorAll('img')[0].src;
+                return dom.querySelectorAll('img')[0] ? dom.querySelectorAll('img')[0].src : "";
             }
 
+            const back = () => {
+                history.back();
+            }
 
-            return { groundElRef, editorInstance, save, back, tags, tempsave, getDescription, getThumbnail }
+            watch(() => store.state.tags, (newValue) => {
+                tags.value = newValue;
+            });
+
+
+            return { groundElRef, editorInstance, save, back, tags, tempsave, getDescription, getThumbnail, getBody }
         }
     }
 </script>

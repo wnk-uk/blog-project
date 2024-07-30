@@ -10,6 +10,7 @@ import com.blog.api.repository.blog.PostRepository;
 import com.blog.api.repository.blog.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
@@ -23,8 +24,10 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -110,5 +113,18 @@ public class PostService {
         String fileUrl = uploadFileDir + File.separator + postFile.getFileName();
         postFile.imageLoad(fileUrl);
         return postFile;
+    }
+
+    public void setPost(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new NoSuchElementException("post not found"));
+        post.posting();
+    }
+
+    public List<Post> getTagPosts(Long id) {
+        return postRepository.findByTagAndStatus(Tag.builder().id(id).build(), PostStatus.POSTING, Sort.by(Sort.Order.desc("postAt"))).stream().collect(Collectors.toList());
+    }
+
+    public List<Post> getPostAll() {
+        return postRepository.findByStatus(PostStatus.POSTING, Sort.by(Sort.Order.desc("postAt"))).stream().collect(Collectors.toList());
     }
 }

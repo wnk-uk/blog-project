@@ -51,20 +51,26 @@ public class PostController {
 
     @GetMapping("/posts")
     public ResponseEntity getPostAll() {
-        List<Post> posts = tagService.getPostAll();
+        List<Post> posts = postService.getPostAll();
         return ResponseEntity.ok(posts);
     }
 
     @GetMapping("/tags/{id}/posts")
     public ResponseEntity getPostList(@PathVariable(name = "id") Long id) {
-        Tag tag = tagService.getPostList(id);
-        return ResponseEntity.ok(tag);
+        List<Post> posts = postService.getTagPosts(id);
+        return ResponseEntity.ok(posts);
     }
 
     @GetMapping("/posts/{id}")
     public ResponseEntity getPost(@PathVariable(name = "id") Long id) {
         Post post = postService.getPost(id);
         return ResponseEntity.ok(post);
+    }
+
+    @PutMapping("/posts/{id}")
+    public ResponseEntity setPost(@PathVariable(name = "id") Long id) {
+        postService.setPost(id);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/posts/inline/add")
