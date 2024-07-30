@@ -5,8 +5,6 @@ export default createStore({
     token: null, // 토큰 상태
     tags: [],
     account : null,
-    tagsMessage: null,
-    tagsIsSuccess : false
   },
 
   //vuex의 상태를 변경하는 유일한 방법
@@ -21,12 +19,6 @@ export default createStore({
     },
     setTags(state, tags) {
       state.tags = tags;
-    },
-    setTagsMessage(state, message) {
-      state.tagsMessage = message;
-    },
-    setTagsIsSuccess(state, flag) {
-      state.tagsIsSuccess = flag;
     },
     setAccount(state, account) {
       state.account = account;
@@ -46,12 +38,6 @@ export default createStore({
     setTags({ commit }, tags) {
       commit('setTags', tags);
     },
-    setTagsMessage({ commit }, message) {
-      commit('setTagsMessage', message);
-    },
-    setTagsIsSuccess({ commit }, flag) {
-      commit('setTagsIsSuccess', flag);
-    },
     setAccount({commit}, account) {
       commit('setAccount', account);
     }
@@ -59,8 +45,6 @@ export default createStore({
   getters: {
     getToken: state => state.token,
     getTags: state => state.tags,
-    getTagsMessage: state => state.tagsMessage,
-    getTagsIsSuccess: state => state.tagsIsSuccess,
     getAccount: state => state.account
   }
 });

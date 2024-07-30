@@ -3,8 +3,7 @@
     <div class="container">
             <div class="row">
                 <!-- Categories widget-->
-                <TagSection @fetchTags="$emit('fetchTags')" @addNewTag="handlerNewTag" @setTagsIsSuccess="setTagsIsSuccess"></TagSection>    
-
+                <TagSection></TagSection>    
                 <!-- Blog entries-->
                 <div class="col-lg-9">
                     <div class="card mb-4" v-for="post in posts.data" :key="post.id" @click="goView(post.id)">
@@ -33,20 +32,11 @@ import router from '../router';
 import dayjs from 'dayjs';
 
     export default {
-        props: ['fetchTags', 'addNewTag'],
         components: {
             TagSection,
             MainHeader
         },
-        setup(props, { emit }) {
-
-            const handlerNewTag = (value) => {
-                emit('addNewTag', value);
-            }
-
-            const setTagsIsSuccess = (value) => {
-                emit('setTagsIsSuccess', value);
-            }
+        setup() {
 
             const posts = reactive({
                 data : [],
@@ -65,7 +55,7 @@ import dayjs from 'dayjs';
                 return dayjs(datetime).format('YYYY년 MM월 DD일 HH:mm');
             };
 
-            return {handlerNewTag, setTagsIsSuccess, posts, goView, formatDateTime};
+            return {posts, goView, formatDateTime};
         }
         
     }

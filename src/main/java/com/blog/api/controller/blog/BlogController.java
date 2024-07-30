@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -47,6 +48,7 @@ public class BlogController {
     }
 
     @GetMapping("/tags")
+    @Transactional
     public ResponseEntity getTagList() throws JsonProcessingException {
 
         List<Tag> allTags = tagRepository.findAll().stream()

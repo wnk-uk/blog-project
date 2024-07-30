@@ -11,7 +11,7 @@ class TagService {
             //localStorage.setItem('tags', JSON.stringify(response.data));
             return response.data;
         } catch (error) {
-            throw new Error('Failed to fetch tags');
+            throw new Error(error.response.data.details);
         }
     }
 
@@ -21,7 +21,7 @@ class TagService {
             return true;
         } catch (error) {
             if (error.response) {
-                throw new Error(error.response.data.message);
+                throw new Error(error.response.data.details);
               } else {
                 throw new Error('Network Error:', error.message);
               }

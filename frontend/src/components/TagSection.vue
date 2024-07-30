@@ -45,17 +45,18 @@
 </template>
 
 <script>
-import { onMounted, reactive, watchEffect, watch  } from 'vue';
-import { useStore } from 'vuex';
+import { onMounted, reactive, watch  } from 'vue';
+import { useStore, mapActions } from 'vuex';
+import TagService from '../services/TagService';
 
     export default {
-        emits: ['fetchTags', 'addNewTag', 'setTagsIsSuccess'],
+        ...mapActions(['setTags']),
         props : ['select'],
-        setup(props, { emit }) {
+        setup(props) {
             const store = useStore();
 
             onMounted(async () => {
-              emit('fetchTags');
+              fetchTags();
               try {
                 state.account = store.state.account;
               } catch (error) {
@@ -67,41 +68,47 @@ import { useStore } from 'vuex';
                 account: null,
                 message: null,
                 tags: [],
-            });
+            }); 
 
-            const submitForm = () => {
-                emit('addNewTag', document.querySelector('#tagName').value);
+            const submitForm = async () => {
+                try {
+                    await TagService.addNewTag(document.querySelector('#tagName').value);
+                    state.message = null;
+                    fetchTags();
+                    } catch (error) {
+                        state.message = error;
+                    }
             }
 
-            function handleClick() {
-                document.querySelector('#close').click();
-                document.querySelector('#tagName').value = "";
-                emit('setTagsIsSuccess', false);
+            const fetchTags = async () => {
+                try {
+                    const tags = await TagService.fetchTags();
+                    state.tags = tags;
+                } catch (error) {
+                    state.message = error;
+                }
             }
-
-            watch(() => store.state.tagsMessage, (newValue) => {
-                state.message = newValue;
-            });
 
             watch(() => props.select, (newValue) => {
-                document.querySelector('#tag_' + newValue).style.color="black";
+                document.querySelector('#tag_' + newValue).style.color = "black";
             });
 
-            watch(() => store.state.tags, (newValue) => {
+            watch(() => state.tags, (newValue) => {
                 state.tags = newValue;
+            });
+
+            watch(() => state.message, (newValue) => {
+                if (newValue == null) {
+                    document.querySelector("#close").click();
+                    document.querySelector('#tagName').value = "";
+                }
             });
 
             watch(() => store.state.account, (newValue) => {
                 state.account = newValue;
             });
 
-            watchEffect(() => {
-               if (store.getters.getTagsIsSuccess) {
-                handleClick();
-               }
-            })
-
-            return { submitForm, state };
+            return { submitForm, state, fetchTags };
         }
     }
 </script>

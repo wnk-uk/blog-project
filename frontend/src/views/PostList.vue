@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <div class="row">
-      <TagSection @fetchTags="$emit('fetchTags')" @addNewTag="handlerNewTag" @setTagsIsSuccess="setTagsIsSuccess" :select="tags.id"></TagSection>    
+      <TagSection :select="tags.id"></TagSection>    
 
       <div class="col-lg-9">
         <div class="card mb-4" v-for="post in posts.data" :key="post.id" @click="goView(post.id)">
           <a href="#!"><img class="card-img-top" style="height:400px;" :src="post.thumbnail" alt="..." /></a>
           <div class="card-body">
-            <div class="small text-muted">January 1, 2023  {{ post.postAt }}</div>
+            <div class="small text-muted">{{ formatDateTime(post.postAt) }}</div>
             <h2 class="card-title">{{ post.title }}</h2>
             <p class="card-text">{{ post.description }}</p>
           </div>
@@ -23,10 +23,10 @@ import { onMounted, reactive } from 'vue';
 import TagSection from '../components/TagSection.vue';
 import PostService from '../services/PostService';
 import router from '../router';
-
+import dayjs from 'dayjs';
 
 export default {
-  setup(props, { emit }) {
+  setup() {
     const route = useRoute();
     const id = route.params.id;
 
@@ -38,14 +38,6 @@ export default {
         id : null
     });
 
-    const handlerNewTag = (value) => {
-      emit('addNewTag', value);
-    }
-
-    const setTagsIsSuccess = (flag) => {
-      emit('setTagsIsSuccess', flag);
-    }
-
     const goView = (pid) => {
       router.push({path: '/posts/view/' + pid});
     }
@@ -55,8 +47,13 @@ export default {
       tags.id = response.id;
       posts.data = response.posts;
     });
+
+    const formatDateTime = (datetime) => {
+      return dayjs(datetime).format('YYYY년 MM월 DD일 HH:mm');
+    };
     
-      return { posts, tags, handlerNewTag, setTagsIsSuccess, goView }
+    return { posts, tags, goView, formatDateTime }
+    
   },
   components: {
     TagSection
