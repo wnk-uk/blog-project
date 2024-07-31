@@ -29,6 +29,10 @@ const routes = [
         component : writeLayout,
     },
     {
+        path: '/posts/write/:id',
+        component : writeLayout,
+    },
+    {
         path: '/posts/temp',
         component : PostTempList,
     },

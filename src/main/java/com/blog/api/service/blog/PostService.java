@@ -127,4 +127,8 @@ public class PostService {
     public List<Post> getPostAll() {
         return postRepository.findByStatus(PostStatus.POSTING, Sort.by(Sort.Order.desc("postAt"))).stream().collect(Collectors.toList());
     }
+
+    public List<Post> getPostAllTemp() {
+        return postRepository.findByStatus(PostStatus.TEMPSAVE, Sort.by(Sort.Order.desc("createAt"))).stream().collect(Collectors.toList());
+    }
 }

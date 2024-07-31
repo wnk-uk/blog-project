@@ -55,6 +55,12 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
+    @GetMapping("/posts/temp")
+    public ResponseEntity getPostTempAll() {
+        List<Post> posts = postService.getPostAllTemp();
+        return ResponseEntity.ok(posts);
+    }
+
     @GetMapping("/tags/{id}/posts")
     public ResponseEntity getPostList(@PathVariable(name = "id") Long id) {
         List<Post> posts = postService.getTagPosts(id);

@@ -25,17 +25,23 @@
 <script>
     import { Editor } from '@toast-ui/editor';
     import { useStore } from 'vuex';
-    import { onMounted, ref, watch } from 'vue';
+    import { onMounted, ref, watch, reactive } from 'vue';
     import router from '../router';
+    import { useRoute } from 'vue-router';
     import PostService from '../services/PostService';
 
     export default {
         setup() {
             const store = useStore();
+            const route = useRoute();
+            const id = route.params.id;
             const groundElRef = ref(null);
-            let editorInstance = null; // 에디터 인스턴스 저장 변수
-            
             const tags = ref(null);
+            let editorInstance = null; // 에디터 인스턴스 저장 변수
+
+            const post = reactive({
+                data : null,
+            });
 
             onMounted(() => {
                 tags.value = store.state.tags;
@@ -55,6 +61,20 @@
                         }
                     }
                 });
+
+                if (id) {
+                    fetchPost();
+                }
+
+            });
+
+            const fetchPost = async () => {
+                post.data = await PostService.fetchPost(id);
+            }
+
+            watch(() => post.data , (newValue) => {
+                editorInstance.setMarkdown(newValue.content);
+                document.querySelector("#title").value = newValue.title;
             });
 
             const save = async () => {
@@ -103,7 +123,7 @@
             });
 
 
-            return { groundElRef, editorInstance, save, back, tags, tempsave, getDescription, getThumbnail, getBody }
+            return { groundElRef, editorInstance, save, back, tags, tempsave, getDescription, getThumbnail, getBody, fetchPost }
         }
     }
 </script>
