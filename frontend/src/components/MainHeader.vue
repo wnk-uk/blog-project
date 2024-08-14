@@ -12,7 +12,7 @@
                             </div>
                             <div>발전을 위한 공간으로 사용하겠습니다.</div>
                             <div>
-                                <a href="https://github.com/wnk-uk/blog-project" target="_black" class="header-link">
+                                <a href="https://github.com/wnk-uk" target="_black" class="header-link">
                                     <font-awesome-icon class="header-icon" :icon="['fab', 'github']" />
                                 </a>
                             </div>

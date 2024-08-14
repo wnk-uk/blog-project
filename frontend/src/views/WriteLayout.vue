@@ -74,6 +74,7 @@
 
             watch(() => post.data , (newValue) => {
                 editorInstance.setMarkdown(newValue.content);
+                document.querySelector("#tags").value = newValue.tagId;
                 document.querySelector("#title").value = newValue.title;
             });
 
@@ -86,7 +87,7 @@
             const tempsave = async () => {
                 let post = getBody('T');
                 await PostService.addNewPost(post);
-                router.push({path:'/tags/' + post.tag})
+                router.push({path:'/posts/temp'})
             }
 
             const getBody = (status) => {

@@ -22,9 +22,12 @@ public class Post {
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore // Post 엔티티의 tag 필드를 무시
     @JoinColumn(name = "tag_id")
+    @JsonIgnore
     private Tag tag;
+
+    @Transient
+    private Long tagId;
 
     @Column(length = 100)
     private String description;

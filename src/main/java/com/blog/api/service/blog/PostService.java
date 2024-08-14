@@ -63,7 +63,9 @@ public class PostService {
     }
 
     public Post getPost(Long id) {
-        return postRepository.findById(id).orElseThrow(() -> new NoSuchElementException("post not found"));
+        Post post = postRepository.findById(id).orElseThrow(() -> new NoSuchElementException("post not found"));
+        post.setTagId(post.getTag().getId());
+        return post;
     }
 
     public PostFile uploadInline(MultipartFile files) throws FileUploadException {
